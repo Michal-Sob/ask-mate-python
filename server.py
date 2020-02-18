@@ -17,6 +17,12 @@ def question_list():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
+    if request.method == "POST":
+        new_question = dict(request.form)
+        print(new_question)
+        return neww
+
+        # title = dict(request.form('title'))
     return render_template('add_question.html')
 
 
