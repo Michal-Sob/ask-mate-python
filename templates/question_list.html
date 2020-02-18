@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Question list | AskMate</title>
+</head>
+<body>
+    <h1>QUESTIONS LIST</h1><br><br>
+    <a href="'/add-question'"><button type="button"><strong>ADD QUESTION</strong></button></a><br><br>
+    <table>
+        <thead>
+            <tr>
+                {% for key in questions[0].keys() %}
+                    <th>{{ key.replace('_', ' ')  }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in questions %}
+                <tr>
+                    {% for column in row.values() %}
+                        <td>{{ column }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
