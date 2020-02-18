@@ -17,7 +17,7 @@ def question_list():
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_question():
-    return None
+    return render_template('add_question.html')
 
 
 if __name__ == "__main__":
