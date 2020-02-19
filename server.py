@@ -26,6 +26,19 @@ def add_question():
     return render_template('add_question.html')
 
 
+@app.route('/show-question/<int:question_id>')
+def show_question(question_id):
+    picked_question = {}
+    for question in data_manager.QUESTIONS:
+        if question_id == int(question['id']):
+            picked_question = question
+            print(picked_question)
+    return render_template('show_question.html', picked_question=picked_question)
+
+
+
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
