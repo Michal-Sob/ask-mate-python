@@ -30,13 +30,13 @@ def submission_time():
     return timestamp
 
 
-def max_id():
+def max_id(data_base):
     lists_starts_with_0 = -1
-    return len(get_questions()) + lists_starts_with_0
+    return len(data_base) + lists_starts_with_0
 
 
 def new_question_data():
-    new_id = max_id() + 1
+    new_id = max_id(get_questions()) + 1
     data = {
         "id": str(new_id),
         "submission_time": str(submission_time()),
@@ -48,9 +48,9 @@ def new_question_data():
 
 def new_question_manager(new_question):
     new_question.update(new_question_data())
+    fieldnames = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+    connection.export_data(QUESTIONS_FILE_PATH, fieldnames, new_question)
 
-    connection.export_data(new_question)
-
-    new_question_id = max_id()
+    new_question_id = max_id(get_questions())
 
     return new_question_id

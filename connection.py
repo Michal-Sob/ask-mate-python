@@ -1,6 +1,6 @@
 import csv
 QUESTIONS_FILE_PATH = 'sample_data/question.csv'
-
+ANSWERS_FILE_PATH = 'sample_data/answer.csv'
 
 def import_data(filename):
     with open(filename, 'r') as file:
@@ -8,9 +8,8 @@ def import_data(filename):
         return [dict(row) for row in reader]
 
 
-def export_data(question):
-    with open(QUESTIONS_FILE_PATH, 'a', newline='') as csvfile:
-        fieldnames = ['id', 'submission_time', 'view_number', 'vote_number',
-                      'title', 'message', 'image']
+def export_data(data_base_path, fieldnames, new_row):
+    with open(data_base_path, 'a', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-        return writer.writerow(question)
+
+        return writer.writerow(new_row)
