@@ -19,15 +19,19 @@
                     {% endif %}
                 {% endfor %}
         </thead>
+        <tbody>
             </tr>
             <tr> {% for key, value in selected_question[0].items() %}
                     {% if key == 'id' %}
                     {% else %}
                     <th>{{ value }}</th>
                     {% endif %}
-                {% endfor %}
-            </tr>
 
+                {% endfor %}
+                <td><button type="button"><strong>VOTE Like</strong></button></td>
+
+            </tr>
+        </tbody>
         <br>
         <br>
     </table>
@@ -41,20 +45,25 @@
                     {% else %}
                         <th>{{ key.replace('_', " ")}}</th>
                     {% endif %}
+
                 {% endfor %}
             </tr>
         </thead>
+        <tbody>
                 {% for answer in selected_question[1:] %}
                     <tr>
+
                     {% for key, value in answer.items() %}
                         {% if key == 'id' or key == "question_id" %}
                         {% else %}
-                        <th>{{ value }}</th>
+                        <td>{{ value }}</td>
+
                         {% endif %}
                     {% endfor %}
+                        <td><button type="button"><strong>VOTE Like</strong></button></td>
                     </tr>
                 {% endfor %}
-
+        </tbody>
     </table><br>
     <a href="/show-question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
 
