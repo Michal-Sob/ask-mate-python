@@ -23,7 +23,7 @@ def connect_question_with_his_answer(id):
     return selected_question
 
 
-def submisson_time():
+def submission_time():
     now = datetime.now()
     timestamp = round(datetime.timestamp(now))
 
