@@ -31,6 +31,13 @@ def show_question(question_id):
     return render_template('show_question.html', selected_question=selected_question)
 
 
+@app.route('/show-question/<int:question_id>/new-answer', methods=['GET', 'POST'])
+def add_answer(question_id):
+    if request.method == "POST":
+        pass
+    return render_template('add_answer.html')
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
