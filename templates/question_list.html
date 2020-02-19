@@ -7,7 +7,7 @@
 <body>
     <h1>QUESTIONS LIST</h1><br><br>
     <a href="/add-question"><button type="button"><strong>ADD QUESTION</strong></button></a><br><br>
-    <table>
+    <table border= "1">
         <thead>
             <tr>
                 {% for key in questions[0].keys() %}
@@ -18,12 +18,17 @@
         <tbody>
             {% for row in questions %}
                 <tr>
-                    {% for column in row.values() %}
-                        <td>{{ column }}</td>
+                    {% for key, value in row.items() %}
+                        {% if key == 'title' %}
+                            <td><a href="/show-question/{{ row['id'] }}">{{ value }}</a></td>
+                        {% else %}
+                        <td>{{ value }}</td>
+                        {% endif %}
                     {% endfor %}
                 </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table><br>
+    <a href="/"><button type="button"><strong>BACK TO MENU</strong></button> </a>
 </body>
 </html>

@@ -4,6 +4,7 @@ import connection
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def main_page():
     return render_template("index.html")
@@ -11,7 +12,7 @@ def main_page():
 
 @app.route('/list')
 def question_list():
-    questions = data_manager.QUESTIONS
+    questions = data_manager.get_questions()
     return render_template('question_list.html', questions=questions)
 
 
@@ -27,6 +28,19 @@ def add_question():
         return redirect(f'show-question/{id_question}')
 
     return render_template('add_question.html')
+
+
+@app.route('/show-question/<int:question_id>')
+def show_question(question_id):
+    picked_question = {}
+    for question in data_manager.get_questions():
+        if question_id == int(question['id']):
+            picked_question = question
+            print(picked_question)
+    return render_template('show_question.html', picked_question=picked_question)
+
+
+
 
 
 if __name__ == "__main__":
