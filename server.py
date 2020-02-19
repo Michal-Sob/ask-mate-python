@@ -31,6 +31,11 @@ def show_question(question_id):
     return render_template('show_question.html', selected_question=selected_question)
 
 
+@app.route('/question/<int:question_id>/delete')
+def deleting_question(question_id):
+    pass
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
