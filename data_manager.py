@@ -24,7 +24,7 @@ def submission_time():
 
 def max_id():
     lists_starts_with_0 = -1
-    return len(QUESTIONS) + lists_starts_with_0
+    return len(get_questions()) + lists_starts_with_0
 
 
 def new_question_data():
@@ -36,3 +36,13 @@ def new_question_data():
         "vote_number": "0"
     }
     return data
+
+
+def new_question_manager(new_question):
+    new_question.update(new_question_data())
+
+    connection.export_data(new_question)
+
+    new_question_id = max_id() + 1
+
+    return new_question_id
