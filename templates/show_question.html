@@ -5,6 +5,61 @@
     <title>Show Question | AskMate</title>
 </head>
 <body>
-{{ selected_question }}
+
+
+    <h2><strong>Question</strong></h2>
+    <table border = "1">
+        <thead>
+
+            <tr>
+                {% for key in selected_question[0].keys() %}
+                    {% if key == 'id' %}
+                    {% else %}
+                        <th>{{ key.replace('_', ' ')  }}</th>
+                    {% endif %}
+                {% endfor %}
+        </thead>
+            </tr>
+            <tr> {% for key, value in selected_question[0].items() %}
+                    {% if key == 'id' %}
+                    {% else %}
+                    <th>{{ value }}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+
+        <br>
+        <br>
+    </table>
+        <h2><strong>Answer</strong></h2>
+    <table border = "1">
+        <thead>
+            <tr>
+
+                {% for key in selected_question[1].keys() %}
+                    {% if key == 'question_id' or key == "id" %}
+                    {% else %}
+                        <th>{{ key.replace('_', " ")}}</th>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        </thead>
+                {% for answer in selected_question[1:] %}
+                    <tr>
+                    {% for key, value in answer.items() %}
+                        {% if key == 'id' or key == "question_id" %}
+                        {% else %}
+                        <th>{{ value }}</th>
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+
+    </table><br>
+    <a href="/show-question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
+
+
+
+
 </body>
 </html>

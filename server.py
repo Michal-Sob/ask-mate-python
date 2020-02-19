@@ -36,6 +36,13 @@ def deleting_question(question_id):
     pass
 
 
+@app.route('/show-question/<int:question_id>/new-answer', methods=['GET', 'POST'])
+def add_answer(question_id):
+    if request.method == "POST":
+        pass
+    return render_template('add_answer.html')
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
