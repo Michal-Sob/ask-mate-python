@@ -51,6 +51,6 @@ def new_question_manager(new_question):
 
     connection.export_data(new_question)
 
-    new_question_id = max_id() + 1
+    new_question_id = max_id()
 
     return new_question_id
