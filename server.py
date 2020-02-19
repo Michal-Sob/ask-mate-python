@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request
 import data_manager
 
-
 app = Flask(__name__)
 
 
@@ -20,10 +19,9 @@ def question_list():
 def add_question():
     if request.method == "POST":
         new_question = dict(request.form)
-        print(new_question)
-        return neww
+        question_id = data_manager.new_question_manager(new_question)
+        return redirect(f'show-question/{question_id}')
 
-        # title = dict(request.form('title'))
     return render_template('add_question.html')
 
 

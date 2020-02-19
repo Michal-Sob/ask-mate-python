@@ -23,8 +23,34 @@ def connect_question_with_his_answer(id):
     return selected_question
 
 
-def submisson_time():
+def submission_time():
     now = datetime.now()
     timestamp = round(datetime.timestamp(now))
 
     return timestamp
+
+
+def max_id():
+    lists_starts_with_0 = -1
+    return len(get_questions()) + lists_starts_with_0
+
+
+def new_question_data():
+    new_id = max_id() + 1
+    data = {
+        "id": str(new_id),
+        "submission_time": str(submission_time()),
+        "view_number": "0",
+        "vote_number": "0"
+    }
+    return data
+
+
+def new_question_manager(new_question):
+    new_question.update(new_question_data())
+
+    connection.export_data(new_question)
+
+    new_question_id = max_id()
+
+    return new_question_id
