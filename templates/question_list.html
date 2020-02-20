@@ -7,6 +7,25 @@
 <body>
     <h1>QUESTIONS LIST</h1><br><br>
     <a href="/add-question"><button type="button"><strong>ADD QUESTION</strong></button></a><br><br>
+
+    <form action="/list"
+          method="get">
+        <label for="sorting">Sorting by:</label>
+
+        <select id="sorting">
+          <option value="Title">Title</option>
+          <option value="submission_time">Submission Time</option>
+          <option value="view_number">View Numebr</option>
+          <option value="vote_number">Vote Number</option>
+        </select>
+
+        <select>
+            <option value="False">Descending</option>
+            <option value="True">Ascending</option>
+        </select>
+        <input type="submit" value="OK">
+    </form>
+
     <table border= "1">
         <thead>
             <tr>
