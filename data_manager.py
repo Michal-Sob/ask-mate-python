@@ -79,6 +79,3 @@ def sorting_questions():
     for row in get_questions():
         for i in sorted(row.keys()):
             print(i)
-
-
-sorting_questions()
