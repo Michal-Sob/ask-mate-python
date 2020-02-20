@@ -78,4 +78,3 @@ def new_answer_manager(new_answer, question_id):
 
 def sorting_questions(sorting_list, reversing):
     sorted(my_list, key=itemgetter(sorting_list), reverse=reversing)
-
