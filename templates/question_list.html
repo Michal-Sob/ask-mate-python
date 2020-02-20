@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for row in questions %}
+            {% for row in questions[::-1] %}
                 <tr>
                     {% for key, value in row.items() %}
                         {% if key == 'title' %}
