@@ -79,3 +79,12 @@ def sorting_questions():
     for row in get_questions():
         for i in sorted(row.keys()):
             print(i)
+
+
+def delete_question(question_id):
+    questions = connection.import_data(QUESTIONS_FILE_PATH)
+    for iterator in questions:
+        if questions[iterator]['id'] == question_id:
+            del questions[iterator]
+            break
+    connection.export_updated_data(QUESTIONS_FILE_PATH, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])

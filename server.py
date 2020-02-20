@@ -47,6 +47,12 @@ def add_answer(question_id):
     return render_template('add_answer.html', question_id=question_id)
 
 
+@app.route('show-question/<int:question_id/delete')
+def delete_answer(question_id):
+    data_manager.delete_question(question_id)
+    return redirect('/list')
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,

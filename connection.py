@@ -13,3 +13,8 @@ def export_data(data_base_path, fieldnames, new_row):
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         return writer.writerow(new_row)
+
+
+def export_updated_data(data_base_path, fieldnames):
+    with open(data_base_path, 'w', newline='') as csvfile:
+        writer = csv.DictReader(csvfile, fieldnames=fieldnames)
