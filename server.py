@@ -9,9 +9,23 @@ def main_page():
     return render_template("index.html")
 
 
-@app.route('/list')
+@app.route('/list', methods=['GET'])
 def question_list():
     questions = data_manager.get_questions()
+    # if request.method == 'GET':
+    #     sorting_list = request.args[0]
+    #     asc = request.args[1]
+    #     print(sorting_list)
+    #     print(asc)
+    # if request.method == 'GET':
+    #     print('lulz')
+    #     sort_by = request.args.get('author')
+    #     title = request.args.get('title')
+    #     return find_books(author, title)
+    # order_by = title&order_direction = desc
+    # data = {'title': 'hello', 'data[]': ['hello', 'world']}
+    # response = request.GET('/list', params=data)
+
     return render_template('question_list.html', questions=questions)
 
 
