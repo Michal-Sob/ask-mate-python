@@ -36,35 +36,42 @@
         <br>
     </table>
         <h2><strong>Answer</strong></h2>
-    <table border = "1">
-        <thead>
-            <tr>
-
-                {% for key in selected_question[1].keys() %}
-                    {% if key == 'question_id' or key == "id" %}
-                    {% else %}
-                        <th>{{ key.replace('_', " ")}}</th>
-                    {% endif %}
-
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-                {% for answer in selected_question[1:] %}
+        {% if leng > 1: %}
+            <table border = "1">
+                <thead>
                     <tr>
 
-                    {% for key, value in answer.items() %}
-                        {% if key == 'id' or key == "question_id" %}
-                        {% else %}
-                        <td>{{ value }}</td>
+                        {% for key in selected_question[1].keys() %}
+                            {% if key == 'question_id' or key == "id" %}
+                            {% else %}
+                                <th>{{ key.replace('_', " ")}}</th>
+                            {% endif %}
 
-                        {% endif %}
-                    {% endfor %}
-                        <td><button type="button"><strong>VOTE Like</strong></button></td>
+                        {% endfor %}
                     </tr>
-                {% endfor %}
-        </tbody>
-    </table><br>
+                </thead>
+            <tbody>
+                    {% for answer in selected_question[1:] %}
+                        <tr>
+
+                        {% for key, value in answer.items() %}
+                            {% if key == 'id' or key == "question_id" %}
+                            {% else %}
+                            <td>{{ value }}</td>
+
+                            {% endif %}
+                        {% endfor %}
+                            <td><button type="button"><strong>VOTE Like</strong></button></td>
+                        </tr>
+                    {% endfor %}
+            </tbody>
+            </table>
+        {% else %}
+                <hr>
+                <p>There is no answer yet</p>
+        {% endif %}
+
+        <br>
     <a href="/show-question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
 
 
