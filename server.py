@@ -28,7 +28,7 @@ def add_question():
 @app.route('/show-question/<int:question_id>')
 def show_question(question_id):
     selected_question = data_manager.connect_question_with_his_answer(str(question_id))
-    return render_template('show_question.html', selected_question=selected_question, leng=len(selected_question))
+    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, leng=len(selected_question))
 
 
 @app.route('/question/<int:question_id>/delete')
@@ -47,7 +47,7 @@ def add_answer(question_id):
     return render_template('add_answer.html', question_id=question_id)
 
 
-@app.route('show-question/<int:question_id/delete')
+@app.route('/show-question/<int:question_id>/delete')
 def delete_answer(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')

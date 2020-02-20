@@ -82,8 +82,8 @@ def sorting_questions(sorting_list, reversing):
 
 def delete_question(question_id):
     questions = connection.import_data(QUESTIONS_FILE_PATH)
-    for iterator in questions:
-        if questions[iterator]['id'] == question_id:
+    for iterator in range(len(questions)):
+        if questions[iterator]['id'] == str(question_id):
             del questions[iterator]
             break
-    connection.export_updated_data(QUESTIONS_FILE_PATH, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'])
+    connection.export_updated_data(QUESTIONS_FILE_PATH, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'], questions)
