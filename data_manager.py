@@ -54,3 +54,12 @@ def new_question_manager(new_question):
     new_question_id = max_id(get_questions())
 
     return new_question_id
+
+
+def sorting_questions():
+    for row in get_questions():
+        for i in sorted(row.keys()):
+            print(i)
+
+
+sorting_questions()
