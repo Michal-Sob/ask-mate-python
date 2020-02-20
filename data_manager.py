@@ -56,6 +56,25 @@ def new_question_manager(new_question):
     return new_question_id
 
 
+def new_answer_data(question_id):
+    new_id = max_id((get_answers())) + 1
+    data = {
+        "id": str(new_id),
+        "submission_time": str(submission_time()),
+        "vote_number": "0",
+        "question_id": str(question_id)
+    }
+    return data
+
+
+def new_answer_manager(new_answer, question_id):
+    new_answer.update(new_answer_data(question_id))
+    fieldnames = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
+    connection.export_data(ANSWERS_FILE_PATH, fieldnames, new_answer)
+    return None
+
+
+
 def sorting_questions():
     for row in get_questions():
         for i in sorted(row.keys()):
