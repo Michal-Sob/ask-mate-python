@@ -28,7 +28,10 @@
                     {% endif %}
 
                 {% endfor %}
-                <td><button type="button"><strong>VOTE Like</strong></button></td>
+                    <td><button type="button"><strong>like</strong></button></td>
+                    <td><button type="button"><strong>disslike</strong></button></td>
+                    <td><button type="button"><strong>update</strong></button></td>
+                    <td><button type="button"><strong>delete</strong></button></td>
 
             </tr>
         </tbody>
@@ -61,7 +64,10 @@
 
                             {% endif %}
                         {% endfor %}
-                            <td><button type="button"><strong>VOTE Like</strong></button></td>
+                            <td><button type="button"><strong>like</strong></button></td>
+                            <td><button type="button"><strong>disslike</strong></button></td>
+                            <td><button type="button"><strong>update</strong></button></td>
+                            <td><button type="button"><strong>delete</strong></button></td>
                         </tr>
                     {% endfor %}
             </tbody>
@@ -73,6 +79,7 @@
 
         <br>
     <a href="/show-question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
+    <a href="/"><button type="button"><strong>BACK TO MANU</strong></button></a><br><br>
 
 
 
