@@ -1,5 +1,6 @@
 import connection
 from datetime import datetime
+from operator import itemgetter
 
 QUESTIONS_FILE_PATH = 'sample_data/question.csv'
 ANSWERS_FILE_PATH = 'sample_data/answer.csv'
@@ -75,10 +76,6 @@ def new_answer_manager(new_answer, question_id):
 
 
 
-def sorting_questions():
-    for row in get_questions():
-        for i in sorted(row.keys()):
-            print(i)
+def sorting_questions(sorting_list, reversing):
+    sorted(my_list, key=itemgetter(sorting_list), reverse=reversing)
 
-
-sorting_questions()
