@@ -4,6 +4,7 @@
 
 -- Dumped from database version 9.5.6
 -- Dumped by pg_dump version 9.5.6
+-- Za błędy trzeba płacić
 
 ALTER TABLE IF EXISTS ONLY public.question DROP CONSTRAINT IF EXISTS pk_question_id CASCADE;
 ALTER TABLE IF EXISTS ONLY public.answer DROP CONSTRAINT IF EXISTS pk_answer_id CASCADE;
