@@ -22,18 +22,6 @@ def connect_question_with_his_answer(id):
     return selected_question
 
 
-def submission_time():
-    now = datetime.now()
-    timestamp = round(datetime.timestamp(now))
-
-    return timestamp
-
-
-def max_id(data_base):
-    lists_starts_with_0 = -1
-    return len(data_base) + lists_starts_with_0
-
-
 def new_question_data():
     new_id = max_id(get_questions()) + 1
     data = {
