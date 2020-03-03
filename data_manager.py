@@ -1,7 +1,6 @@
 import connection
-from datetime import datetime
+import util
 from operator import itemgetter
-
 
 @connection.connection_handler
 def get_answers(cursor, question_id):
