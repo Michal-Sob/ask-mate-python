@@ -96,13 +96,6 @@ def delete_question(question_id):
 
 
 @connection.connection_handler
-def delete_question(cursor):
-    questions = get_questions(cursor)
-    answers = get_answers(cursor)
-    for iterator in range(len(questions)):
-        if questions[iterator]['id'] == str(question_id):
-            del questions[iterator]
-            break
-    for answer in answers[:]:
-        if answer['question_id'] == str(question_id):
-            del answers[answers.index(answer)]
+def delete_question(cursor, question_id):
+    cursor.execute("""DELETE FROM question WHERE id = (%s)""", (question_id,))
+    cursor.execute("""DELETE FROM answer WHERE id = (%s)""", (question_id,))

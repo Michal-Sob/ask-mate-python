@@ -48,7 +48,8 @@ def show_question(question_id):
 
 @app.route('/question/<int:question_id>/delete')
 def deleting_question(question_id):
-    pass
+    data_manager.delete_question(question_id)
+    return redirect('/list')
 
 
 @app.route('/show-question/<int:question_id>/new-answer', methods=['GET', 'POST'])
