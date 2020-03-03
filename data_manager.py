@@ -3,14 +3,21 @@ from datetime import datetime
 from operator import itemgetter
 
 
-def get_answers():
-    pass
+@connection.connection_handler
+def get_answers(cursor, question_id):
+    cursor.execute("""SELECT * FROM answer WHERE question_id = (%s)""", (question_id,))
+    answers = [dict(row) for row in cursor.fetchall()]
+    return answers
 
 
 @connection.connection_handler
-def get_questions(cursor):
-    cursor.execute("""SELECT * from question """)
-    questions = cursor.fetchall()
+def get_questions(cursor, question_id=None):
+    if not id:
+        cursor.execute("""SELECT * FROM question """)
+        questions = [dict(row) for row in cursor.fetchall()]
+    else:
+        cursor.execute("""SELECT * FROM question WHERE id = (%s), (question_id,)""")
+        questions = [dict(row) for row in cursor.fetchall()]
     return questions
 
 
@@ -41,6 +48,14 @@ def new_question_manager(new_question):
     new_question_id = max_id(get_questions())
 
     return new_question_id
+
+
+@connection.connection_handler
+def new_question_manager(cursor, new_question):
+    cursor.execute("""INSERT INTO question (title, message) VALUES (%s,%s);""", (new_question['title'], new_question['message'],))
+    cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title']})
+    question_id = int(cursor.fetchone()['id'])
+    return question_id
 
 
 def new_answer_data(question_id):
@@ -78,3 +93,16 @@ def delete_question(question_id):
 
     connection.export_updated_data(QUESTIONS_FILE_PATH, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'], questions)
     connection.export_updated_data(ANSWERS_FILE_PATH, ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image'], answers)
+
+
+@connection.connection_handler
+def delete_question(cursor):
+    questions = get_questions(cursor)
+    answers = get_answers(cursor)
+    for iterator in range(len(questions)):
+        if questions[iterator]['id'] == str(question_id):
+            del questions[iterator]
+            break
+    for answer in answers[:]:
+        if answer['question_id'] == str(question_id):
+            del answers[answers.index(answer)]
