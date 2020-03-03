@@ -54,7 +54,6 @@ def deleting_question(question_id):
 @app.route('/show-question/<int:question_id>/new-answer', methods=['GET', 'POST'])
 def add_answer(question_id):
     if request.method == "POST":
-        print(question_id)
         new_answer = dict(request.form)
         data_manager.new_answer_manager(new_answer, question_id)
         return redirect(f'/show-question/{question_id}')

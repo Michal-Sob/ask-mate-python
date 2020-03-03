@@ -52,9 +52,9 @@ def new_question_manager(new_question):
 
 @connection.connection_handler
 def new_question_manager(cursor, new_question):
-    cursor.execute("""INSERT INTO question (title, message) VALUES (%s,%s);""", (new_question['title'], new_question['message'],))
-    cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title']})
-    question_id = int(cursor.fetchone()['id'])
+    cursor.execute("""INSERT INTO question (title,submission_time, message) VALUES (%s,%s,%s);""", (new_question['title'], util.submission_time(), new_question['message'],))
+    cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title'], 'message': new_question['message']})
+    question_id = dict(cursor.fetchone())['id']
     return question_id
 
 
