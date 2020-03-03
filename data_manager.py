@@ -2,6 +2,7 @@ import connection
 import util
 from operator import itemgetter
 
+
 @connection.connection_handler
 def get_answers(cursor, question_id):
     cursor.execute("""SELECT * FROM answer WHERE question_id = (%s)""", (question_id,))

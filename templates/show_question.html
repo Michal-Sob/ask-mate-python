@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Show Question | AskMate</title>
 </head>
-<body style="background-color:orange;">
+<body style="background-color:#ff146e;">
 
 
     <h2><strong>Question</strong></h2>
@@ -13,25 +13,25 @@
 
             <tr>
                 {% for key in selected_question[0].keys() %}
-                    {% if key == 'id' %}
-                    {% else %}
+{#                    {% if key == 'id' %}#}
+{#                    {% else %}#}
                         <th>{{ key.replace('_', ' ')  }}</th>
-                    {% endif %}
+{#                    {% endif %}#}
                 {% endfor %}
         </thead>
         <tbody>
             </tr>
             <tr> {% for key, value in selected_question[0].items() %}
-                    {% if key == 'id' %}
-                    {% else %}
+{#                    {% if key == 'id' %}#}
+{#                    {% else %}#}
                     <th>{{ value }}</th>
-                    {% endif %}
+{#                    {% endif %}#}
 
                 {% endfor %}
                     <td><button type="button"><strong>like</strong></button></td>
                     <td><button type="button"><strong>disslike</strong></button></td>
                     <td><button type="button"><strong>update</strong></button></td>
-                    <td><a href="/show-question/{{ question_id }}/delete"><button type="button"><strong>delete</strong></button></a></td>
+                    <td><a href="/question/{{ question_id }}/delete"><button type="button"><strong>delete</strong></button></a></td>
 
             </tr>
         </tbody>
@@ -39,12 +39,12 @@
         <br>
     </table>
         <h2><strong>Answer</strong></h2>
-        {% if leng > 1: %}
+        {% if answers %}
             <table border = "1">
                 <thead>
                     <tr>
 
-                        {% for key in selected_question[1].keys() %}
+                        {% for key in answers[0].keys() %}
                             {% if key == 'question_id' or key == "id" %}
                             {% else %}
                                 <th>{{ key.replace('_', " ")}}</th>
@@ -54,7 +54,7 @@
                     </tr>
                 </thead>
             <tbody>
-                    {% for answer in selected_question[1:] %}
+                    {% for answer in answers %}
                         <tr>
 
                         {% for key, value in answer.items() %}
@@ -78,11 +78,5 @@
         {% endif %}
 
         <br>
-    <a href="/show-question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
+    <a href="/question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
     <a href="/"><button type="button"><strong>BACK TO MENU</strong></button></a><br><br>
-
-
-
-
-</body>
-</html>

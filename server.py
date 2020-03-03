@@ -12,6 +12,7 @@ def main_page():
 @app.route('/list', methods=['GET'])
 def question_list():
     questions = data_manager.get_questions()
+    print(questions)
     # if request.method == 'GET':
     #     sorting_list = request.args[0]
     #     asc = request.args[1]
@@ -39,7 +40,7 @@ def add_question():
     return render_template('add_question.html')
 
 
-@app.route('/show-question/<int:question_id>')
+@app.route('/question/<int:question_id>')
 def show_question(question_id):
     selected_question = data_manager.get_questions(question_id=question_id)
     answers = data_manager.get_answers(question_id=question_id)
@@ -52,17 +53,17 @@ def deleting_question(question_id):
     return redirect('/list')
 
 
-@app.route('/show-question/<int:question_id>/new-answer', methods=['GET', 'POST'])
+@app.route('/question/<int:question_id>/new-answer', methods=['GET', 'POST'])
 def add_answer(question_id):
     if request.method == "POST":
         new_answer = dict(request.form)
         data_manager.new_answer_manager(new_answer, question_id)
-        return redirect(f'/show-question/{question_id}')
+        return redirect(f'/question/{question_id}')
 
     return render_template('add_answer.html', question_id=question_id)
 
 
-@app.route('/show-question/<int:question_id>/delete')
+@app.route('/question/<int:question_id>/delete')
 def delete_answer(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')

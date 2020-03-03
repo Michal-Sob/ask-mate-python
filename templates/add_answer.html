@@ -6,7 +6,7 @@
 </head>
 <body style="background-color:orange;">
     <h1>ADD ANSWER</h1>
-    <form action="/show-question/{{ question_id }}/new-answer", method="post">
+    <form action="/question/{{ question_id }}/new-answer", method="post">
         <label for="message"><strong>Message:</strong></label><br>
         <textarea id="message" rows="4" cols="50" name="message" required></textarea>
         <input type="submit" value="Submit">
