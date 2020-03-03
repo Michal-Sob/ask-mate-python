@@ -41,9 +41,9 @@ def add_question():
 
 @app.route('/show-question/<int:question_id>')
 def show_question(question_id):
-    question
-    answers
-    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, leng=len(selected_question))
+    selected_question = data_manager.get_questions(question_id=question_id)
+    answers = data_manager.get_answers(question_id=question_id)
+    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers)
 
 
 @app.route('/question/<int:question_id>/delete')

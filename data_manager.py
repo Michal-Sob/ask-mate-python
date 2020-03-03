@@ -12,11 +12,11 @@ def get_answers(cursor, question_id):
 
 @connection.connection_handler
 def get_questions(cursor, question_id=None):
-    if not id:
+    if not question_id:
         cursor.execute("""SELECT * FROM question """)
         questions = [dict(row) for row in cursor.fetchall()]
     else:
-        cursor.execute("""SELECT * FROM question WHERE id = (%s), (question_id,)""")
+        cursor.execute("""SELECT * FROM question WHERE id = (%s)""", (question_id,))
         questions = [dict(row) for row in cursor.fetchall()]
     return questions
 
