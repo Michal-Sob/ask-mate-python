@@ -41,7 +41,8 @@ def add_question():
 
 @app.route('/show-question/<int:question_id>')
 def show_question(question_id):
-    selected_question = data_manager.connect_question_with_his_answer(str(question_id))
+    question
+    answers
     return render_template('show_question.html', question_id=question_id, selected_question=selected_question, leng=len(selected_question))
 
 
