@@ -40,11 +40,9 @@ def new_answer_data(question_id):
     return data
 
 
-def new_answer_manager(new_answer, question_id):
-    new_answer.update(new_answer_data(question_id))
-    fieldnames = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
-    connection.export_data(ANSWERS_FILE_PATH, fieldnames, new_answer)
-    return None
+@connection.connection_handler
+def new_answer_manager(cursor, new_answer):
+    cursor.execute("""INSERT INTO answer  """)
 
 
 def sorting_questions(sorting_list, reversing):

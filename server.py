@@ -35,7 +35,7 @@ def add_question():
     if request.method == "POST":
         new_question = dict(request.form)
         question_id = data_manager.new_question_manager(new_question)
-        return redirect(f'show-question/{question_id}')
+        return redirect(f'question/{question_id}')
 
     return render_template('add_question.html')
 
@@ -57,7 +57,7 @@ def deleting_question(question_id):
 def add_answer(question_id):
     if request.method == "POST":
         new_answer = dict(request.form)
-        data_manager.new_answer_manager(new_answer, question_id)
+        new_answer['question_id'] = question_id
         return redirect(f'/question/{question_id}')
 
     return render_template('add_answer.html', question_id=question_id)
