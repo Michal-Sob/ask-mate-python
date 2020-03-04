@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Question list | AskMate</title>
-</head>
-<body style="background-color:#24ff0b;">
+{% extends 'layout.html' %}
+{% block content %}
     <h1>QUESTIONS LIST</h1><br><br>
     <a href="/add-question"><button type="button"><strong>ADD QUESTION</strong></button></a><br><br>
 
@@ -49,5 +44,4 @@
         </tbody>
     </table><br>
     <a href="/"><button type="button"><strong>BACK TO MENU</strong></button> </a>
-</body>
-</html>
+{% endblock %}

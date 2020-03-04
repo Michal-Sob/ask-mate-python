@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add Answer | AskMate</title>
-</head>
-<body style="background-color:orange;">
+{% extends 'layout.html' %}
+{% block content %}
     <h1>ADD ANSWER</h1>
     <form action="/question/{{ question_id }}/new-answer", method="post">
         <label for="message"><strong>Message:</strong></label><br>
         <textarea id="message" rows="4" cols="50" name="message" required></textarea>
         <input type="submit" value="Submit">
     </form>
-</body>
-</html>
+{% endblock %}
