@@ -1,0 +1,12 @@
+body {
+    background-color: #34dfff;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
+.content-wrapper {
+    padding: 10%;
+}
+
+h1 {
+    color: #ffffff;
+}
