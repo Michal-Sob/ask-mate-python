@@ -58,6 +58,8 @@ def add_answer(question_id):
     if request.method == "POST":
         new_answer = dict(request.form)
         new_answer['question_id'] = question_id
+        print(new_answer)
+        data_manager.new_answer_manager(new_answer)
         return redirect(f'/question/{question_id}')
 
     return render_template('add_answer.html', question_id=question_id)

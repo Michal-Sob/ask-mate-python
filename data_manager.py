@@ -29,39 +29,13 @@ def new_question_manager(cursor, new_question):
     return question_id
 
 
-def new_answer_data(question_id):
-    new_id = max_id((get_answers())) + 1
-    data = {
-        "id": str(new_id),
-        "submission_time": str(submission_time()),
-        "vote_number": "0",
-        "question_id": str(question_id)
-    }
-    return data
-
-
 @connection.connection_handler
 def new_answer_manager(cursor, new_answer):
-    cursor.execute("""INSERT INTO answer  """)
+    cursor.execute("""INSERT INTO answer (submission_time, question_id, message)  VALUES ( %s, %s, %s);""", (util.submission_time(), new_answer['question_id'], new_answer['message'],))
 
 
 def sorting_questions(sorting_list, reversing):
     sorted(get_questions(), key=itemgetter(sorting_list), reverse=reversing)
-
-
-def delete_question(question_id):
-    questions = connection.import_data(QUESTIONS_FILE_PATH)
-    answers = connection.import_data(ANSWERS_FILE_PATH)
-    for iterator in range(len(questions)):
-        if questions[iterator]['id'] == str(question_id):
-            del questions[iterator]
-            break
-    for answer in answers[:]:
-        if answer['question_id'] == str(question_id):
-            del answers[answers.index(answer)]
-
-    connection.export_updated_data(QUESTIONS_FILE_PATH, ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image'], questions)
-    connection.export_updated_data(ANSWERS_FILE_PATH, ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image'], answers)
 
 
 @connection.connection_handler
