@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-    <h1>ADD ANSWER</h1>
+    <h1>ADD ANSWER</h1></hr>
     <form action="/question/{{ question_id }}/new-answer", method="post">
         <label for="message"><strong>Message:</strong></label><br>
         <textarea id="message" rows="4" cols="50" name="message" required></textarea>
