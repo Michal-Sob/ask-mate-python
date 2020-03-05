@@ -75,10 +75,10 @@ def add_answer(question_id):
     return render_template('add_answer.html', question_id=question_id)
 
 
-@app.route('/question/<int:question_id>/delete')
+@app.route('/answer/<int:question_id>/delete')
 def delete_answer(question_id):
-    data_manager.delete_question(question_id)
-    return redirect('/list')
+    data_manager.delete_answer(question_id)
+    return redirect(f'/question/{question_id}')
 
 
 @app.route('/question/<int:question_id>/update')
@@ -109,6 +109,7 @@ def add_answer_comment(answer_id):
         return redirect(f'/question/{question_id}')
 
     return render_template('add_comment.html', answer_id=answer_id)
+
 
 if __name__ == "__main__":
     app.run(

@@ -1,6 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
 <body>
+<script>
+function myFunction(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
+</script>
 
 <!-- QUESTION -->
 
@@ -16,8 +21,12 @@
         <tbody>
             </tr>
             <tr> {% for key, value in selected_question.items() %}
+                        {% if key == "vote_number" %}
+                    <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
 
+                        {%  else %}
                     <td>{{ value }}</td>
+                        {%  endif %}
                 {% endfor %}
             </tr>
         </tbody>
@@ -26,8 +35,7 @@
         <br>
     <table>
         <tbody>
-        <td><button type="button"><strong>like</strong></button></td>
-        <td><button type="button"><strong>disslike</strong></button></td>
+
         <td><a href="/question/{{selected_question['id']}}/update"><button type="button"><strong>update</strong></button></a></td>
         <td><a href="/question/{{selected_question['id']}}/delete"><button type="button"><strong>delete</strong></button></a></td>
         <td><a href="/question/{{question_id}}/new-comment">New comment</a></td>
@@ -88,15 +96,16 @@
 
                         {% for key, value in answer.items() %}
                             {% if key == 'id' or key == "question_id" %}
+                            {%  elif key == "vote_number" %}
+                            <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
                             {% else %}
                             <td>{{ value }}</td>
 
                             {% endif %}
                         {% endfor %}
-                            <td><button type="button"><strong>like</strong></button></td>
-                            <td><button type="button"><strong>disslike</strong></button></td>
+
                             <td><button type="button"><strong>update</strong></button></td>
-                            <td><button type="button"><strong>delete</strong></button></td>
+                            <td><a href="/answer/{{question_id}}/delete"><button type="button"><strong>delete</strong></button></a></td>
                             <td><a href="/answer/{{ answer_id }}/new-comment">add comment</a></td>
                         </tr>
                     {% endfor %}

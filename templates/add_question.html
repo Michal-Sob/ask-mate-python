@@ -4,7 +4,7 @@
     <form action="/add-question"
           method="post">
 
-        <label for="title"><strong>Title:</strong></label><br>
+        <label id="add_title" for="title"><strong><p>Title:</p></strong></label><br>
         <input type="text" id="title" name="title" value="{{selected_question['title'] if selected_question is defined else ''}}">
         <p>
             <label for="message"><strong>Message:</strong></label><br>

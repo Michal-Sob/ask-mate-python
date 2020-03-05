@@ -1,14 +1,26 @@
 body {
-    background-color: #ff8527;
+     background-image: url("../images/koronawirus_2.jpeg");
+        background-color: #cccccc;
     font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
 }
 
 .content-wrapper {
     padding: 10%;
 }
-
-h1, a {
+h2,p {
     color: #ffffff;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    text-shadow: -1px -1px 1px #666666;
+    letter-spacing: 0.15em;
+}
+
+h1,a {
+    color: #ffffff;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    text-align: center;
+    text-shadow: -1px -1px 1px #666666;
+    letter-spacing: 0.15em;
+
 }
 table {
     border-spacing: 0px;
@@ -38,4 +50,13 @@ tr.head th {
     text-align: center;
     text-shadow: -1px -1px 1px #666666;
     letter-spacing: 0.15em;
+}
+.fa {
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: #fa3e37;
 }
