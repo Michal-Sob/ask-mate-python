@@ -42,7 +42,7 @@ def add_question():
 
 @app.route('/question/<int:question_id>')
 def show_question(question_id):
-    selected_question = data_manager.get_questions(question_id=question_id)
+    selected_question = data_manager.get_questions(question_id=question_id)[0]
     answers = data_manager.get_answers(question_id=question_id)
     return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers)
 
@@ -68,6 +68,12 @@ def add_answer(question_id):
 def delete_answer(question_id):
     data_manager.delete_question(question_id)
     return redirect('/list')
+
+
+@app.route('/question/<int:question_id>/update')
+def update_question(question_id):
+    selected_question = data_manager.get_questions(question_id=question_id)[0]
+    return render_template('add_question.html', selected_question=selected_question)
 
 
 if __name__ == "__main__":

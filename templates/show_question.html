@@ -8,26 +8,28 @@
         <thead>
 
             <tr class="head">
-                {% for key in selected_question[0].keys() %}
+                {% for key in selected_question.keys() %}
                         <th>{{ key.replace('_', ' ')  }}</th>
                 {% endfor %}
         </thead>
         <tbody>
             </tr>
-            <tr> {% for key, value in selected_question[0].items() %}
+            <tr> {% for key, value in selected_question.items() %}
 
-                    <th>{{ value }}</th>
-
+                    <td>{{ value }}</td>
                 {% endfor %}
-                    <td><button type="button"><strong>like</strong></button></td>
-                    <td><button type="button"><strong>disslike</strong></button></td>
-                    <td><button type="button"><strong>update</strong></button></td>
-                    <td><a href="/question/{{ question_id }}/delete"><button type="button"><strong>delete</strong></button></a></td>
-
             </tr>
         </tbody>
+    </table>
         <br>
         <br>
+    <table>
+        <tbody>
+        <td><button type="button"><strong>like</strong></button></td>
+        <td><button type="button"><strong>disslike</strong></button></td>
+        <td><a href="/question/{{selected_question['id']}}/update"><button type="button"><strong>update</strong></button></a></td>
+        <td><a href="/question/{{selected_question['id']}}/delete"><button type="button"><strong>delete</strong></button></a></td>
+        </tbody>
     </table>
         <h2><strong>Answer</strong></h2>
         {% if answers %}
@@ -69,7 +71,7 @@
         {% endif %}
 
         <br>
-    <a href="/question/{{ selected_question[0]['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
+    <a href="/question/{{ selected_question['id'] }}/new-answer"><button type="button"><strong>ADD ANSWER</strong></button></a><br><br>
     <a href="/"><button type="button"><strong>BACK TO MENU</strong></button></a><br><br>
 
 {% endblock %}
