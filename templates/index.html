@@ -3,8 +3,29 @@
 
         <center><h1><strong>ASK MATE</strong></h1></center></hr>
     <br><br><br>
-        <center><a href = "/list"><button type="button"><strong>LIST ALL QUESTION</strong></button></a></center><br><br>
-    <br><br><br><br><br><br>
+        <center><a href = "/list"><button type="button"><strong>LIST ALL QUESTION</strong></button></a></center><br>
     <center><a href = "/add-question"><button type="button"><strong>ADD QUESTION</strong></button></a></center><br><br>
+ <table>
+        <thead>
+            <tr class="head">
+                {% for key in questions[0].keys() %}
+                    <th>{{ key.replace('_', ' ')  }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in questions[:-6:-1] %}
+                <tr>
+                    {% for key, value in row.items() %}
+                        {% if key == 'title' %}
+                            <td><a href="/question/{{ row['id'] }}">{{ value }}</a></td>
+                        {% else %}
+                        <td>{{ value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
 
 {% endblock %}

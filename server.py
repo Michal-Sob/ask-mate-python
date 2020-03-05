@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 @app.route('/')
 def main_page():
-    return render_template("index.html")
+    questions = data_manager.get_questions()
+    return render_template("index.html", questions=questions)
 
 
 @app.route('/list', methods=['GET'])
 def question_list():
     questions = data_manager.get_questions()
-    print(questions)
     # if request.method == 'GET':
     #     sorting_list = request.args[0]
     #     asc = request.args[1]

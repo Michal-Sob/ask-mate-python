@@ -4,24 +4,19 @@
 
 
 <h2><strong>Question</strong></h2></body></hr>
-    <table border = "1">
+    <table>
         <thead>
 
-            <tr>
+            <tr class="head">
                 {% for key in selected_question[0].keys() %}
-{#                    {% if key == 'id' %}#}
-{#                    {% else %}#}
                         <th>{{ key.replace('_', ' ')  }}</th>
-{#                    {% endif %}#}
                 {% endfor %}
         </thead>
         <tbody>
             </tr>
             <tr> {% for key, value in selected_question[0].items() %}
-{#                    {% if key == 'id' %}#}
-{#                    {% else %}#}
+
                     <th>{{ value }}</th>
-{#                    {% endif %}#}
 
                 {% endfor %}
                     <td><button type="button"><strong>like</strong></button></td>
@@ -37,9 +32,9 @@
     </table>
         <h2><strong>Answer</strong></h2>
         {% if answers %}
-            <table border = "1">
+            <table>
                 <thead>
-                    <tr>
+                    <tr class="head">
 
                         {% for key in answers[0].keys() %}
                             {% if key == 'question_id' or key == "id" %}
