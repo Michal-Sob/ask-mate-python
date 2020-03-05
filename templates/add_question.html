@@ -5,10 +5,10 @@
           method="post">
 
         <label for="title"><strong>Title:</strong></label><br>
-        <input type="text" id="title" name="title" value="{{selected_question['title']}}">
+        <input type="text" id="title" name="title" value="{{selected_question['title'] if selected_question is defined else ''}}">
         <p>
             <label for="message"><strong>Message:</strong></label><br>
-            <textarea id="message" rows="4" cols="50" name="message" required>{{ selected_question['message'] if selected_question }}</textarea>
+            <textarea id="message" rows="4" cols="50" name="message" required>{{selected_question['message'] if selected_question is defined else ''}}</textarea>
         </p>
 
         <input type="submit" value="Submit">
