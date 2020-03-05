@@ -111,6 +111,10 @@ def add_answer_comment(answer_id):
     return render_template('add_comment.html', answer_id=answer_id)
 
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 if __name__ == "__main__":
     app.run(
         debug=True,
