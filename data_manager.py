@@ -20,6 +20,13 @@ def get_questions(cursor, question_id=None):
         questions = [dict(row) for row in cursor.fetchall()]
     return questions
 
+@connection.connection_handler
+def get_comments(cursor, question_id):
+    cursor.execute("""SELECT * FROM comment WHERE question_id = (%s)""", (question_id,))
+    comments = [dict(row) for row in cursor.fetchall()]
+    return comments
+
+
 
 @connection.connection_handler
 def new_question_manager(cursor, new_question):
@@ -36,7 +43,7 @@ def new_answer_manager(cursor, new_answer):
 
 @connection.connection_handler
 def new_comment_manager(cursor, new_comment):
-    if new_comment['question_id']:
+    if new_comment['question_id'] or new_comment['question_id'] == 0:
         new_message_value = new_comment['question_id']
         new_message = 'question_id'
     else:

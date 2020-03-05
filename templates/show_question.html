@@ -2,6 +2,7 @@
 {% block content %}
 <body>
 
+<!-- QUESTION -->
 
 <h2><strong>Question</strong></h2></body></hr>
     <table>
@@ -29,9 +30,44 @@
         <td><button type="button"><strong>disslike</strong></button></td>
         <td><a href="/question/{{selected_question['id']}}/update"><button type="button"><strong>update</strong></button></a></td>
         <td><a href="/question/{{selected_question['id']}}/delete"><button type="button"><strong>delete</strong></button></a></td>
+        <td><a href="/question/{{question_id}}/new-comment">New comment</a></td>
         </tbody>
     </table>
-        <h2><strong>Answer</strong></h2>
+
+<!-- COMMENTS-->
+
+{% if comments %}
+    <h5>Comments</h5>
+<table>
+        <thead>
+
+            <tr class="head">
+                {% for key in comments[0].keys() %}
+                    {% if key == 'id' or key == 'question_id' or key == 'answer_id' %}
+                    {% else %}
+                        <th>{{ key.replace('_', ' ')  }}</th>
+                    {% endif %}
+                {% endfor %}
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            </tr>
+            <tr>
+                {% for key, value in comment.items() %}
+                    {% if key == 'id' or key == "question_id" or key == 'answer_id' %}
+                    {% else %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            </tr>
+        </tbody>
+</table>
+{% endif %}
+
+<!-- ANSWERS -->
+
+        <h2><strong>Answers</strong></h2>
         {% if answers %}
             <table>
                 <thead>
@@ -68,7 +104,7 @@
             </table>
         {% else %}
                 <hr>
-                <p>There is no answer yet</p>
+                <p>There are no answers yet</p>
         {% endif %}
 
         <br>
