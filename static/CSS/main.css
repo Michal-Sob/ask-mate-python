@@ -10,3 +10,32 @@ body {
 h1 {
     color: #ffffff;
 }
+table {
+    border-spacing: 0px;
+}
+th,td {
+    color: #fff;
+    padding: 5px 10px 5px 10px;
+    border-spacing: 0px;
+    font-size: 90%;
+    margin: 0px;
+}
+th,td{
+    text-align: left;
+    background-color: #0098ff;
+    border-top: 2px solid #ff5531;
+    border-bottom: 2px solid #ff5531;
+    border-right: 2px solid #ff5531;
+    border-left: 2px solid #ff5531;
+}
+tr.head th {
+    color: #fff;
+    background-color: #2245ff;
+    border-top: 2px solid #ff412f;
+    border-bottom: 2px solid #ff5531;
+    border-right: 2px solid #ff5531;
+    border-left: 2px solid #ff5531;
+    text-align: center;
+    text-shadow: -1px -1px 1px #666666;
+    letter-spacing: 0.15em;
+}
