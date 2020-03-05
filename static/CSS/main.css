@@ -51,3 +51,12 @@ tr.head th {
     text-shadow: -1px -1px 1px #666666;
     letter-spacing: 0.15em;
 }
+.fa {
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover {
+  color: #fa3e37;
+}
