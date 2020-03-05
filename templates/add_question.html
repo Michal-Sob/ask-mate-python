@@ -5,11 +5,10 @@
           method="post">
 
         <label for="title"><strong>Title:</strong></label><br>
-        <input type="text" id="title" name="title" required>
-
+        <input type="text" id="title" name="title" value="{{selected_question['title']}}">
         <p>
             <label for="message"><strong>Message:</strong></label><br>
-            <textarea id="message" rows="4" cols="50" name="message" required></textarea>
+            <textarea id="message" rows="4" cols="50" name="message" required>{{ selected_question['message'] if selected_question }}</textarea>
         </p>
 
         <input type="submit" value="Submit">
