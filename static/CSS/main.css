@@ -7,8 +7,14 @@ body {
 .content-wrapper {
     padding: 10%;
 }
+h2,p {
+    color: #ffffff;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+    text-shadow: -1px -1px 1px #666666;
+    letter-spacing: 0.15em;
+}
 
-h1, a {
+h1,a {
     color: #ffffff;
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     text-align: center;
