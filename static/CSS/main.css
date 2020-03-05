@@ -7,7 +7,7 @@ body {
     padding: 10%;
 }
 
-h1 {
+h1, a {
     color: #ffffff;
 }
 table {
@@ -22,7 +22,7 @@ th,td {
 }
 th,td{
     text-align: left;
-    background-color: #0098ff;
+    background-color: #000204;
     border-top: 2px solid #ff5531;
     border-bottom: 2px solid #ff5531;
     border-right: 2px solid #ff5531;
@@ -30,7 +30,7 @@ th,td{
 }
 tr.head th {
     color: #fff;
-    background-color: #2245ff;
+    background-color: #000204;
     border-top: 2px solid #ff412f;
     border-bottom: 2px solid #ff5531;
     border-right: 2px solid #ff5531;
