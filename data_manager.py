@@ -34,6 +34,19 @@ def new_answer_manager(cursor, new_answer):
     cursor.execute("""INSERT INTO answer (submission_time, question_id, message)  VALUES ( %s, %s, %s);""", (util.submission_time(), new_answer['question_id'], new_answer['message'],))
 
 
+@connection.connection_handler
+def new_comment_manager(cursor, new_comment):
+    if new_comment['question_id']:
+        new_message_value = new_comment['question_id']
+        new_message = 'question_id'
+    else:
+        new_message_value = new_comment['answer_id']
+        new_message = 'answer_id'
+
+    cursor.execute("""INSERT INTO comment (submission_time, question_id, message)  VALUES ( %s, %s, %s);""",
+                       (util.submission_time(), new_message_value, new_comment['message'],))
+
+
 def sorting_questions(sorting_list, reversing):
     sorted(get_questions(), key=itemgetter(sorting_list), reverse=reversing)
 

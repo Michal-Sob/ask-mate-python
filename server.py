@@ -71,6 +71,29 @@ def delete_answer(question_id):
     return redirect('/list')
 
 
+@app.route('/question/<int:question_id>/new-comment', methods=['GET', 'POST'])
+def add_question_comment(question_id):
+    if request.method == "POST":
+        new_comment = dict(request.form)
+        new_comment['question_id'] = question_id
+        data_manager.new_comment_manager(new_comment)
+
+        return redirect(f'/question/{question_id}')
+
+    return render_template('add_comment.html', question_id=question_id)
+
+
+@app.route('/question/<int:answer_id>/new-comment', methods=['GET', 'POST'])
+def add_answer_comment(answer_id):
+    if request.method == "POST":
+        new_comment = dict(request.form)
+        new_comment['answer_id'] = answer_id
+        data_manager.new_comment_manager(new_comment)
+
+        return redirect(f'/answer/{answer_id}')
+
+    return render_template('add_comment.html', answer_id=answer_id)
+
 if __name__ == "__main__":
     app.run(
         debug=True,

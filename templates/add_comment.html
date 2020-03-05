@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
 
-    <form action="/question/<question_id>/new-comment"
+    <form action="/question/{{ question_id }}/new-comment"
           method="post">
 
         <p>
