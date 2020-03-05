@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1>QUESTIONS LIST</h1><br><br></hr>
-    <a href="/add-question"><button type="button"><strong>ADD QUESTION</strong></button></a><br><br>
+
 
     <form action="/list"
           method="get">
@@ -34,7 +34,8 @@
                 <tr>
                     {% for key, value in row.items() %}
                         {% if key == 'title' %}
-                            <td><a href="/question/{{ row['id'] }}">{{ value }}</a></td>
+                            <td><a href="{{ url_for ('show_question',  question_id=row['id']) }}">{{ value }}</a></td>
+
                         {% else %}
                         <td>{{ value }}</td>
                         {% endif %}
@@ -43,5 +44,5 @@
             {% endfor %}
         </tbody>
     </table><br>
-    <a href="/"><button type="button"><strong>BACK TO MENU</strong></button> </a>
+'
 {% endblock %}
