@@ -24,6 +24,18 @@ def get_questions(cursor, question_id=None):
         questions = [dict(row) for row in cursor.fetchall()]
     return questions
 
+
+@connection.connection_handler
+def search_by_title_or_message(cursor, text):
+    text = '%' + text + '%'
+    cursor.execute("""SELECT * FROM question WHERE (message LIKE (%s)) OR (title LIKE (%s))""", (text, text,))
+    searched_list = [dict(row) for row in cursor.fetchall()]
+    if len(searched_list) == 0:
+        cursor.execute("""SELECT * FROM question """,)
+        searched_list = [dict(row) for row in cursor.fetchall()]
+    return searched_list
+
+
 @connection.connection_handler
 def get_comments(cursor, question_id):
     cursor.execute("""SELECT * FROM comment WHERE question_id = (%s)""", (question_id,))

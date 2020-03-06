@@ -10,10 +10,18 @@ def main_page():
     return render_template("index.html", questions=questions)
 
 
+@app.route('/list/<search>', methods=['GET'])
 @app.route('/list', methods=['GET'])
-def question_list():
-    questions = data_manager.get_questions()
-    return render_template('question_list.html', questions=questions)
+def question_list(search=None):
+    text = None
+    if search:
+        text = request.args.get('text')
+        print(text)
+        questions = data_manager.search_by_title_or_message(text)
+        print(questions)
+    else:
+        questions = data_manager.get_questions()
+    return render_template('question_list.html', questions=questions, text=text)
 
 
 @app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
