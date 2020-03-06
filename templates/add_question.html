@@ -1,14 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1>Add Question</h1></hr>
-    <form action="/add-question"
+    <form action="{{ url_for('add_question', question_id= question_id) if selected_question else url_for('add_question')}}"
           method="post">
 
         <label id="add_title" for="title"><strong><p>Title:</p></strong></label><br>
         <input type="text" id="title" name="title" value="{{selected_question['title'] if selected_question is defined else ''}}">
         <p>
             <label for="message"><strong>Message:</strong></label><br>
-            <textarea id="message" rows="4" cols="50" name="message" required>{{selected_question['message'] if selected_question is defined else ''}}</textarea>
+            <textarea id="message" rows="4" cols="50" name="message" required>{{selected_question['message'] if selected_question is defined else ''}}
+            </textarea>
         </p>
 
         <input type="submit" value="Submit">

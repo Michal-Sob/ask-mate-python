@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, url_for
 import data_manager
 
 app = Flask(__name__)
@@ -13,31 +13,25 @@ def main_page():
 @app.route('/list', methods=['GET'])
 def question_list():
     questions = data_manager.get_questions()
-    # if request.method == 'GET':
-    #     sorting_list = request.args[0]
-    #     asc = request.args[1]
-    #     print(sorting_list)
-    #     print(asc)
-    # if request.method == 'GET':
-    #     print('lulz')
-    #     sort_by = request.args.get('author')
-    #     title = request.args.get('title')
-    #     return find_books(author, title)
-    # order_by = title&order_direction = desc
-    # data = {'title': 'hello', 'data[]': ['hello', 'world']}
-    # response = request.GET('/list', params=data)
-
     return render_template('question_list.html', questions=questions)
 
 
+@app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
 @app.route('/add-question', methods=['GET', 'POST'])
-def add_question():
+def add_question(question_id=None):
     if request.method == "POST":
         new_question = dict(request.form)
-        question_id = data_manager.new_question_manager(new_question)
-        return redirect(f'question/{question_id}')
+        if question_id:
+            question_id = data_manager.update_question(question_id, new_question)
+        else:
+            question_id = data_manager.new_question_manager(new_question)
+        return redirect(f'/question/{question_id}')
 
-    return render_template('add_question.html')
+    selected_question = None
+    if question_id:
+        selected_question = data_manager.get_questions(question_id=question_id)[0]
+
+    return render_template('add_question.html', selected_question=selected_question, question_id=question_id)
 
 
 @app.route('/question/<int:question_id>')
@@ -53,27 +47,37 @@ def deleting_question(question_id):
     return redirect('/list')
 
 
+@app.route('/answer/<int:answer_id>/update', methods=['GET', 'POST'])
 @app.route('/question/<int:question_id>/new-answer', methods=['GET', 'POST'])
-def add_answer(question_id):
+def add_answer(question_id=None, answer_id=None):
+    answers = data_manager.get_answers()
+    message = None
     if request.method == "POST":
         new_answer = dict(request.form)
-        new_answer['question_id'] = question_id
-        data_manager.new_answer_manager(new_answer)
+        if answer_id:
+            question_id = data_manager.update_answer(answer_id, new_answer)['question_id']
+        else:
+            new_answer['question_id'] = question_id
+            question_id = data_manager.new_answer_manager(new_answer)
         return redirect(f'/question/{question_id}')
+    if answer_id:
+        for answer in answers:
+            if answer['id'] == answer_id:
+                question_id = answer['question_id']
+                message = answer['message']
 
-    return render_template('add_answer.html', question_id=question_id)
+    return render_template('add_answer.html', question_id=question_id, answer_id=answer_id, message=message)
 
 
-@app.route('/answer/<int:question_id>/delete')
-def delete_answer(question_id):
-    data_manager.delete_answer(question_id)
-    return redirect(f'/question/{question_id}')
-
-
-@app.route('/question/<int:question_id>/update')
-def update_question(question_id):
-    selected_question = data_manager.get_questions(question_id=question_id)[0]
-    return render_template('add_question.html', selected_question=selected_question)
+@app.route('/answer/<int:answer_id>/delete')
+def delete_answer(answer_id):
+    question_id = None
+    answers = data_manager.get_answers()
+    for answer in answers:
+        if answer['id'] == answer_id:
+            question_id = answer['question_id']
+    data_manager.delete_answer(answer_id)
+    return redirect(url_for('show_question', question_id=question_id))
 
 
 @app.route('/question/<int:question_id>/new-comment', methods=['GET', 'POST'])

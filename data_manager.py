@@ -4,9 +4,13 @@ from operator import itemgetter
 
 
 @connection.connection_handler
-def get_answers(cursor, question_id):
-    cursor.execute("""SELECT * FROM answer WHERE question_id = (%s)""", (question_id,))
-    answers = [dict(row) for row in cursor.fetchall()]
+def get_answers(cursor, question_id=None):
+    if question_id:
+        cursor.execute("""SELECT * FROM answer WHERE question_id = (%s)""", (question_id,))
+        answers = [dict(row) for row in cursor.fetchall()]
+    else:
+        cursor.execute("""SELECT * FROM answer""")
+        answers = [dict(row) for row in cursor.fetchall()]
     return answers
 
 
@@ -32,6 +36,7 @@ def new_question_manager(cursor, new_question):
 @connection.connection_handler
 def new_answer_manager(cursor, new_answer):
     cursor.execute("""INSERT INTO answer (submission_time, question_id, message)  VALUES ( %s, %s, %s);""", (util.submission_time(), new_answer['question_id'], new_answer['message'],))
+    return new_answer['question_id']
 
 
 @connection.connection_handler
@@ -47,10 +52,6 @@ def new_comment_manager(cursor, new_comment):
                        (util.submission_time(), new_message_value, new_comment['message'],))
 
 
-def sorting_questions(sorting_list, reversing):
-    sorted(get_questions(), key=itemgetter(sorting_list), reverse=reversing)
-
-
 @connection.connection_handler
 def delete_question(cursor, question_id):
     cursor.execute("""DELETE FROM answer WHERE question_id = (%s)""", (question_id,))
@@ -58,5 +59,19 @@ def delete_question(cursor, question_id):
 
 
 @connection.connection_handler
-def delete_answer(cursor, question_id):
-    cursor.execute("""DELETE FROM answer WHERE question_id = (%s)""", (question_id,))
+def delete_answer(cursor, answer_id):
+    cursor.execute("""DELETE FROM answer WHERE id = (%s)""", (answer_id,))
+
+
+@connection.connection_handler
+def update_question(cursor, question_id, new_question):
+    cursor.execute("""UPDATE question SET message=(%s), title=(%s) WHERE id=(%s);""", (new_question['message'], new_question['title'], question_id,))
+    return question_id
+
+
+@connection.connection_handler
+def update_answer(cursor, answer_id, new_answer):
+    cursor.execute("""UPDATE answer SET message=(%s) WHERE id = (%s);""", (new_answer['message'], answer_id,))
+    cursor.execute(""" SELECT question_id FROM answer WHERE id=(%s);""", (answer_id,))
+    question_id = cursor.fetchone()
+    return question_id

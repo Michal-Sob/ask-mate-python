@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
     <h1>ADD ANSWER</h1></hr>
-    <form action="/question/{{ question_id }}/new-answer", method="post">
+    <form action="/answer/{{ answer_id }}/update", method="post">
         <label for="message"><strong>Message:</strong></label><br>
-        <textarea id="message" rows="4" cols="50" name="message" required></textarea>
+        <textarea id="message" rows="4" cols="50" required name="message">{{message if answer_id else ''}}</textarea>
         <input type="submit" value="Submit">
     </form>
 {% endblock %}
