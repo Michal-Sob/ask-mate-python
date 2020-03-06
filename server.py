@@ -38,7 +38,18 @@ def add_question(question_id=None):
 def show_question(question_id):
     selected_question = data_manager.get_questions(question_id=question_id)[0]
     answers = data_manager.get_answers(question_id=question_id)
-    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers)
+    question_comments = data_manager.get_comments(question_id)
+
+    try:
+        answer_id = answers[0]['id']
+    except IndexError:
+        answer_id = None
+
+    comments = data_manager.get_comments(question_id=question_id)
+    # answers_comments = None
+    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers,
+                                                 answer_id=answer_id, comments=comments
+                           )
 
 
 @app.route('/question/<int:question_id>/delete')
@@ -92,17 +103,21 @@ def add_question_comment(question_id):
     return render_template('add_comment.html', question_id=question_id)
 
 
-@app.route('/question/<int:answer_id>/new-comment', methods=['GET', 'POST'])
+@app.route('/answer/<int:answer_id>/new-comment', methods=['GET', 'POST'])
 def add_answer_comment(answer_id):
     if request.method == "POST":
         new_comment = dict(request.form)
         new_comment['answer_id'] = answer_id
         data_manager.new_comment_manager(new_comment)
 
-        return redirect(f'/answer/{answer_id}')
+        return redirect(f'/question/{question_id}')
 
     return render_template('add_comment.html', answer_id=answer_id)
 
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == "__main__":
     app.run(

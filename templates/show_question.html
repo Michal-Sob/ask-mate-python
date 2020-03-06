@@ -1,7 +1,13 @@
 {% extends 'layout.html' %}
 {% block content %}
 <body>
+<script>
+function myFunction(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
+</script>
 
+<!-- QUESTION -->
 
 <h2><strong>Question</strong></h2></body></hr>
     <table>
@@ -15,8 +21,12 @@
         <tbody>
             </tr>
             <tr> {% for key, value in selected_question.items() %}
+                        {% if key == "vote_number" %}
+                    <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
 
+                        {%  else %}
                     <td>{{ value }}</td>
+                        {%  endif %}
                 {% endfor %}
             </tr>
         </tbody>
@@ -25,13 +35,47 @@
         <br>
     <table>
         <tbody>
-        <td><button type="button"><strong>like</strong></button></td>
-        <td><button type="button"><strong>disslike</strong></button></td>
+
         <td><a href="/question/{{selected_question['id']}}/update"><button type="button"><strong>update</strong></button></a></td>
         <td><a href="/question/{{selected_question['id']}}/delete"><button type="button"><strong>delete</strong></button></a></td>
+        <td><a href="/question/{{question_id}}/new-comment">New comment</a></td>
         </tbody>
     </table>
-        <h2><strong>Answer</strong></h2>
+
+<!-- COMMENTS-->
+
+{% if comments %}
+    <h5>Comments</h5>
+<table>
+        <thead>
+
+            <tr class="head">
+                {% for key in comments[0].keys() %}
+                    {% if key == 'id' or key == 'question_id' or key == 'answer_id' %}
+                    {% else %}
+                        <th>{{ key.replace('_', ' ')  }}</th>
+                    {% endif %}
+                {% endfor %}
+        </thead>
+        <tbody>
+            {% for comment in comments %}
+            </tr>
+            <tr>
+                {% for key, value in comment.items() %}
+                    {% if key == 'id' or key == "question_id" or key == 'answer_id' %}
+                    {% else %}
+                        <td>{{ value }}</td>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+            </tr>
+        </tbody>
+</table>
+{% endif %}
+
+<!-- ANSWERS -->
+
+        <h2><strong>Answers</strong></h2>
         {% if answers %}
             <table>
                 <thead>
@@ -52,19 +96,14 @@
 
                         {% for key, value in answer.items() %}
                             {% if key == 'id' or key == "question_id" %}
+                            {%  elif key == "vote_number" %}
+                            <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
                             {% else %}
                             <td>{{ value }}</td>
 
                             {% endif %}
                         {% endfor %}
-                            <td>
-                                <button type="button"><strong>like</strong>
-                                </button>
-                            </td>
-                            <td>
-                                <button type="button"><strong>disslike</strong>
-                                </button>
-                            </td>
+
                             <td><a href="/answer/{{answer['id'] if answer['id'] else ''}}/update">
                                 <button type="button"><strong>update</strong></button>
                                 </a>
@@ -80,7 +119,7 @@
             </table>
         {% else %}
                 <hr>
-                <p>There is no answer yet</p>
+                <p>There are no answers yet</p>
         {% endif %}
 
         <br>
