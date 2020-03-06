@@ -16,9 +16,7 @@ def question_list(search=None):
     text = None
     if search:
         text = request.args.get('text')
-        print(text)
         questions = data_manager.search_by_title_or_message(text)
-        print(questions)
     else:
         questions = data_manager.get_questions()
     return render_template('question_list.html', questions=questions, text=text)
