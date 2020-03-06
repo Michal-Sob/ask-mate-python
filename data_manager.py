@@ -61,8 +61,10 @@ def new_comment_manager(cursor, new_comment):
 
 @connection.connection_handler
 def delete_question(cursor, question_id):
+    cursor.execute("""DELETE FROM comment WHERE question_id = (%s)""", (question_id,))
     cursor.execute("""DELETE FROM answer WHERE question_id = (%s)""", (question_id,))
     cursor.execute("""DELETE FROM question WHERE id = (%s)""", (question_id,))
+
 
 
 @connection.connection_handler

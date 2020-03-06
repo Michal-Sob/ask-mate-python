@@ -7,7 +7,7 @@ body {
 .content-wrapper {
     padding: 10%;
 }
-h2,p {
+h2,p,h5 {
     color: #ffffff;
     font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
     text-shadow: -1px -1px 1px #666666;

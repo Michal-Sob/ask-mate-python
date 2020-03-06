@@ -63,8 +63,10 @@ def deleting_question(question_id):
 def add_answer(question_id=None, answer_id=None):
     answers = data_manager.get_answers()
     message = None
+    print(answer_id)
     if request.method == "POST":
         new_answer = dict(request.form)
+        print(answer_id)
         if answer_id:
             question_id = data_manager.update_answer(answer_id, new_answer)['question_id']
         else:
@@ -118,6 +120,7 @@ def add_answer_comment(answer_id):
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 if __name__ == "__main__":
     app.run(
