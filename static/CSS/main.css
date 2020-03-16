@@ -60,3 +60,11 @@ tr.head th {
 .fa:hover {
   color: #fa3e37;
 }
+
+#log_in {
+    background: #1976d2;
+    border-color: #01579b;
+    color: #ffffff;
+    width:10%;
+    padding:10px 10px;
+}
