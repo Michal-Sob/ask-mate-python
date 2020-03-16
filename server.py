@@ -40,6 +40,7 @@ def add_question(question_id=None):
     return render_template('add_question.html', selected_question=selected_question, question_id=question_id)
 
 
+
 @app.route('/question/<int:question_id>')
 def show_question(question_id):
     selected_question = data_manager.get_questions(question_id=question_id)[0]
