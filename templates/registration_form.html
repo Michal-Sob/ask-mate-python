@@ -5,18 +5,21 @@
     <form action="{{ url_for('registration') }}"
           method="post">
 
-        <p><strong>REMEMBER</strong>
-<br>
+        <p><strong>REMEMBER</strong><br>
             your email will be used as your username</p>
 
-        <label id="email" for="email"><strong><p>Email:</p></strong></label>
-<br>
+        <label for="email"><strong><p>Email:</p></strong></label><br>
         <input type="text" id="email" name="email">
 <br>
-        <label id="password" for="password"><strong><p>Password:</p></strong></label>
-<br>
-        <input type="text" id="password" name="password">
-        <input type="checkbox" onclick="myFunction()">Show Password
+
+        <label for="password"><strong><p>Password:</p></strong></label><br>
+        <input type="password" id="password" name="password">
+        <span id="show_password"><input type="checkbox" onclick="showPassword()">{{ 'Hide' if checked else 'Show'}}</span>
+
+<!--<br>-->
+<!--        <label for="password_confirmation"><strong><p>Confirm Password:</p></strong></label><br>-->
+<!--        <input type="password" id="password_confirmation" name="password confirmation">-->
+
 <br>
         <input type="submit" value="Submit">
     </form>

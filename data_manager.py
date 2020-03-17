@@ -43,7 +43,6 @@ def get_comments(cursor, question_id):
     return comments
 
 
-
 @connection.connection_handler
 def new_question_manager(cursor, new_question):
     cursor.execute("""INSERT INTO question (title,submission_time, message) VALUES (%s,%s,%s);""", (new_question['title'], util.submission_time(), new_question['message'],))

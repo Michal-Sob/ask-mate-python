@@ -40,7 +40,6 @@ def add_question(question_id=None):
     return render_template('add_question.html', selected_question=selected_question, question_id=question_id)
 
 
-
 @app.route('/question/<int:question_id>')
 def show_question(question_id):
     selected_question = data_manager.get_questions(question_id=question_id)[0]
@@ -54,8 +53,9 @@ def show_question(question_id):
 
     comments = data_manager.get_comments(question_id=question_id)
     # answers_comments = None
-    return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers,
-                                                 answer_id=answer_id, comments=comments
+    return render_template('show_question.html', question_id=question_id, selected_question=selected_question,
+                           answers=answers,
+                           answer_id=answer_id, comments=comments
                            )
 
 
@@ -112,6 +112,7 @@ def add_question_comment(question_id):
     return render_template('add_comment.html', question_id=question_id)
 
 
+# Work in progress
 @app.route('/answer/<int:answer_id>/new-comment', methods=['GET', 'POST'])
 def add_answer_comment(answer_id):
     if request.method == "POST":
@@ -124,13 +125,23 @@ def add_answer_comment(answer_id):
     return render_template('add_comment.html', answer_id=answer_id)
 
 
+# Work in progress
+
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+
+@app.route('/registration')
+def registration():
+
+
+    return render_template('registration_form.html')
 
 
 if __name__ == "__main__":
     app.run(
         debug=True,
         port=5000
-            )
+    )
