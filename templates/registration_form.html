@@ -9,7 +9,9 @@
             your email will be used as your username</p>
 
         <label for="username"><strong><p>Email:</p></strong></label><br>
-        <input type="text" id="username" name="email" required>
+        <input type="text" id="username" name="email" required
+               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        >
 <br>
 
         <label for="password"><strong><p>Password:</p></strong></label><br>

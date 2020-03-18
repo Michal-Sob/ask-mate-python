@@ -1,11 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
 <body>
-<script>
-function myFunction(x) {
-  x.classList.toggle("fa-thumbs-down");
-}
-</script>
 
 <!-- QUESTION -->
 
@@ -22,7 +17,7 @@ function myFunction(x) {
             </tr>
             <tr> {% for key, value in selected_question.items() %}
                         {% if key == "vote_number" %}
-                    <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
+                    <td>{{ value }} <i onclick="thumb_toggle(this)" class="fa fa-thumbs-up"></td>
 
                         {%  else %}
                     <td>{{ value }}</td>
@@ -95,7 +90,7 @@ function myFunction(x) {
                         {% for key, value in answer.items() %}
                             {% if key == 'id' or key == "question_id" %}
                             {%  elif key == "vote_number" %}
-                            <td>{{ value }} <i onclick="myFunction(this)" class="fa fa-thumbs-up"></td>
+                            <td>{{ value }} <i onclick="thumbToggle(this)" class="fa fa-thumbs-up"></td>
                             {% else %}
                             <td>{{ value }}</td>
 

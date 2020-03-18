@@ -19,3 +19,8 @@ function showPassword() {
     x.type = "password";
     }
 }
+
+
+function thumbToggle(x) {
+  x.classList.toggle("fa-thumbs-down");
+}
