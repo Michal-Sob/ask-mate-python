@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1>Registration</h1></hr>
+    <form action="{{ url_for('registration') }}"
+          method="post">
+
+        <p><strong>REMEMBER</strong><br>
+            your email will be used as your username</p>
+
+        <label for="username"><strong><p>Email:</p></strong></label><br>
+        <input type="text" id="username" name="email">
+<br>
+
+        <label for="password"><strong><p>Password:</p></strong></label><br>
+        <input type="password" id="password" name="password">
+        <span id="show_password"><input type="checkbox" onclick="showPassword()">{{ 'Hide' if checked else 'Show'}}</span>
+
+<!--<br>-->
+<!--        <label for="password_confirmation"><strong><p>Confirm Password:</p></strong></label><br>-->
+<!--        <input type="password" id="password_confirmation" name="password confirmation">-->
+
+<br>
+        <input type="submit" value="Submit">
+    </form>
+
+{% endblock %}
