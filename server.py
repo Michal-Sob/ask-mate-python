@@ -29,10 +29,12 @@ def question_list(search=None):
 def add_question(question_id=None):
     if not util.is_logged_in():
         return redirect('/login')
+    if question_id and session['email'] != data_manager.get_user_email(question_id, 'question'):
+        return redirect(f'/question/{question_id}')
     if request.method == "POST":
         new_question = dict(request.form)
-        if question_id:
-            question_id = data_manager.update_question(question_id, new_question, session['email'])
+        if question_id and session['email'] == data_manager.get_user_email(question_id, 'question'):
+            question_id = data_manager.update_question(question_id, new_question)
         else:
             question_id = data_manager.new_question_manager(new_question, session['email'])
         return redirect(f'/question/{question_id}')
