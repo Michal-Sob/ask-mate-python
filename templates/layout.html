@@ -34,6 +34,7 @@
               </form>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url_for('log_out') if logged_in else url_for('log_in') }}">{{ 'log out' if logged_in else 'log in' }}</a></li>
+                <li><a href="{{ url_for ('registration') }}">{{ '' if logged_in else 'Sign in' }}</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Option <b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -50,6 +51,7 @@
             </nav>
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for ('static', filename='javascript/script.js') }}"></script>
         <div class="content-wrapper">
             {% block content %} {% endblock %}
         </div>

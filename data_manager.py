@@ -95,6 +95,15 @@ def update_answer(cursor, answer_id, new_answer):
 
 
 @connection.connection_handler
+def add_user(cursor, new_user):
+
+    hashed_password = util.hash_password(new_user['password'])
+
+    cursor.execute("""INSERT INTO users (email, hash, registration_time) VALUES (%s, %s, %s);""",
+                   (new_user['email'], hashed_password, util.submission_time()))
+
+
+@connection.connection_handler
 def get_user_id(cursor, table):
     sql = """SELECT users FROM """ + table
     cursor.execute(sql)
