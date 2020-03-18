@@ -20,7 +20,7 @@ def verify_password(plain_text_password, hashed_password):
     return bcrypt.checkpw(plain_text_password.encode('utf-8'), hashed_bytes_password)
 
 
-def check_if_logged_in():
+def is_logged_in():
     logged_in = False
     if 'email' in session:
         logged_in = True

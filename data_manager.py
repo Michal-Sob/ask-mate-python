@@ -44,8 +44,9 @@ def get_comments(cursor, question_id):
 
 
 @connection.connection_handler
-def new_question_manager(cursor, new_question):
-    cursor.execute("""INSERT INTO question (title,submission_time, message) VALUES (%s,%s,%s);""", (new_question['title'], util.submission_time(), new_question['message'],))
+def new_question_manager(cursor, new_question, user_email):
+    cursor.execute("""INSERT INTO question (title,submission_time, message, user_email) VALUES (%s,%s,%s,%s);""",
+                   (new_question['title'], util.submission_time(), new_question['message'], user_email))
     cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title'], 'message': new_question['message']})
     question_id = dict(cursor.fetchone())['id']
     return question_id
@@ -53,7 +54,8 @@ def new_question_manager(cursor, new_question):
 
 @connection.connection_handler
 def new_answer_manager(cursor, new_answer):
-    cursor.execute("""INSERT INTO answer (submission_time, question_id, message)  VALUES ( %s, %s, %s);""", (util.submission_time(), new_answer['question_id'], new_answer['message'],))
+    cursor.execute("""INSERT INTO answer (submission_time, question_id, message, user_email)  VALUES ( %s, %s, %s, %s);"""
+                   , (util.submission_time(), new_answer['question_id'], new_answer['message'], new_answer['user_email']))
     return new_answer['question_id']
 
 
@@ -104,11 +106,11 @@ def add_user(cursor, new_user):
 
 
 @connection.connection_handler
-def get_user_id(cursor, table):
-    sql = """SELECT users FROM """ + table
+def get_user_email(cursor, data_id, table):
+    sql = """SELECT user_email FROM """ + table + """ WHERE id = """ + str(data_id)
     cursor.execute(sql)
-    user_id = cursor.fetchall()
-    return user_id
+    user_email = cursor.fetchall()
+    return user_email[0]['user_email']
 
 
 @connection.connection_handler
@@ -121,3 +123,4 @@ def get_user_password_by_email(cursor, email):
         user_hash = util.hash_password('wrong password')
 
     return user_hash
+
