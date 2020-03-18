@@ -105,11 +105,11 @@ def add_user(cursor, new_user):
 
 
 @connection.connection_handler
-def get_user_id(cursor, table):
-    sql = """SELECT users FROM """ + table
+def get_user_email(cursor, question_id, table):
+    sql = """SELECT user_email FROM """ + table + """ WHERE id = """ + str(question_id)
     cursor.execute(sql)
-    user_id = cursor.fetchall()
-    return user_id
+    user_email = cursor.fetchall()
+    return user_email[0]['user_email']
 
 
 @connection.connection_handler

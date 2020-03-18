@@ -64,7 +64,10 @@ def show_question(question_id):
 
 @app.route('/question/<int:question_id>/delete')
 def deleting_question(question_id):
-    data_manager.delete_question(question_id)
+    if util.is_logged_in() and session['email'] == data_manager.get_user_email(question_id, 'question'):
+        data_manager.delete_question(question_id)
+    else:
+        return redirect(url_for('log_in'))
     return redirect('/list')
 
 
