@@ -43,10 +43,10 @@ def get_comments(cursor, question_id):
     return comments
 
 
-
 @connection.connection_handler
-def new_question_manager(cursor, new_question):
-    cursor.execute("""INSERT INTO question (title,submission_time, message) VALUES (%s,%s,%s);""", (new_question['title'], util.submission_time(), new_question['message'],))
+def new_question_manager(cursor, new_question, user_email):
+    cursor.execute("""INSERT INTO question (title,submission_time, message, user_email) VALUES (%s,%s,%s,%s);""",
+                   (new_question['title'], util.submission_time(), new_question['message'], user_email))
     cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title'], 'message': new_question['message']})
     question_id = dict(cursor.fetchone())['id']
     return question_id
