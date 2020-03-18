@@ -34,15 +34,17 @@
               </form>
               <ul class="nav navbar-nav navbar-right">
                 <li><a href="{{ url_for('log_out') if logged_in else url_for('log_in') }}">{{ 'log out' if logged_in else 'log in' }}</a></li>
-                <li><a href="{{ url_for ('registration') }}">{{ '' if logged_in else 'Sign in' }}</a></li>
+                  {% if not logged_in %}
+                <li><a href="{{ url_for ('registration') }}">Sign in</a></li>
+                  {% endif %}
                 <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Option <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Option <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
                   </ul>
                 </li>
               </ul>

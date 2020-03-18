@@ -9,19 +9,23 @@
             your email will be used as your username</p>
 
         <label for="username"><strong><p>Email:</p></strong></label><br>
-        <input type="text" id="username" name="email">
+        <input type="text" id="username" name="email" required>
 <br>
 
         <label for="password"><strong><p>Password:</p></strong></label><br>
-        <input type="password" id="password" name="password">
-        <span id="show_password"><input type="checkbox" onclick="showPassword()">{{ 'Hide' if checked else 'Show'}}</span>
+        <input type="password" id="password" name="password" required
+               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+               title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+        >
+
+        <span id="show_password"><input type="checkbox" onclick="showPassword()"><span id="checkbox_text">Show</span></span>
 
 <!--<br>-->
 <!--        <label for="password_confirmation"><strong><p>Confirm Password:</p></strong></label><br>-->
 <!--        <input type="password" id="password_confirmation" name="password confirmation">-->
 
 <br>
-        <input type="submit" value="Submit">
+        <input id="sign_in" type="submit" value="Sign in">
     </form>
 
 {% endblock %}
