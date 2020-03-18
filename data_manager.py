@@ -54,7 +54,8 @@ def new_question_manager(cursor, new_question, user_email):
 
 @connection.connection_handler
 def new_answer_manager(cursor, new_answer):
-    cursor.execute("""INSERT INTO answer (submission_time, question_id, message)  VALUES ( %s, %s, %s);""", (util.submission_time(), new_answer['question_id'], new_answer['message'],))
+    cursor.execute("""INSERT INTO answer (submission_time, question_id, message, user_email)  VALUES ( %s, %s, %s, %s);"""
+                   , (util.submission_time(), new_answer['question_id'], new_answer['message'], new_answer['user_email']))
     return new_answer['question_id']
 
 
@@ -105,8 +106,8 @@ def add_user(cursor, new_user):
 
 
 @connection.connection_handler
-def get_user_email(cursor, question_id, table):
-    sql = """SELECT user_email FROM """ + table + """ WHERE id = """ + str(question_id)
+def get_user_email(cursor, data_id, table):
+    sql = """SELECT user_email FROM """ + table + """ WHERE id = """ + str(data_id)
     cursor.execute(sql)
     user_email = cursor.fetchall()
     return user_email[0]['user_email']

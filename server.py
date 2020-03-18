@@ -76,14 +76,15 @@ def deleting_question(question_id):
 def add_answer(question_id=None, answer_id=None):
     answers = data_manager.get_answers()
     message = None
-    print(answer_id)
+    if not util.is_logged_in():
+        return redirect('/login')
     if request.method == "POST":
         new_answer = dict(request.form)
-        print(answer_id)
-        if answer_id:
+        if answer_id and session['email'] == data_manager.get_user_email(answer_id, 'answer'):
             question_id = data_manager.update_answer(answer_id, new_answer)['question_id']
         else:
             new_answer['question_id'] = question_id
+            new_answer['user_email'] = session['email']
             question_id = data_manager.new_answer_manager(new_answer)
         return redirect(f'/question/{question_id}')
     if answer_id:
@@ -143,12 +144,10 @@ def log_in():
     wrong_data = None
     if request.method == "POST":
         session['email'] = request.form['email']
-        session['password'] = request.form['password']
-        if util.verify_password(session['password'], data_manager.get_user_password_by_email(session['email'])):
+        if util.verify_password(request.form['password'], data_manager.get_user_password_by_email(session['email'])):
             return redirect('/')
         else:
             session.pop('email', None)
-            session.pop('password', None)
             wrong_data = 'Invalid user name or password  '
             return render_template('login.html', logged_in=util.is_logged_in(), wrong_data=wrong_data)
     return render_template('login.html', logged_in=util.is_logged_in(), wrong_data=wrong_data)
@@ -157,7 +156,6 @@ def log_in():
 @app.route('/logout')
 def log_out():
     session.pop('email', None)
-    session.pop('password', None)
     return redirect(url_for('main_page'))
 
 
