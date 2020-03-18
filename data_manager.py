@@ -73,10 +73,7 @@ def new_comment_manager(cursor, new_comment):
 
 @connection.connection_handler
 def delete_question(cursor, question_id):
-    cursor.execute("""DELETE FROM comment WHERE question_id = (%s)""", (question_id,))
-    cursor.execute("""DELETE FROM answer WHERE question_id = (%s)""", (question_id,))
     cursor.execute("""DELETE FROM question WHERE id = (%s)""", (question_id,))
-
 
 
 @connection.connection_handler
@@ -96,3 +93,31 @@ def update_answer(cursor, answer_id, new_answer):
     cursor.execute(""" SELECT question_id FROM answer WHERE id=(%s);""", (answer_id,))
     question_id = cursor.fetchone()
     return question_id
+
+
+@connection.connection_handler
+def get_user_id(cursor, table):
+    sql = """SELECT users FROM """ + table
+    cursor.execute(sql)
+    user_id = cursor.fetchall()
+    return user_id
+
+
+@connection.connection_handler
+def get_user_password_by_email(cursor, email):
+    cursor.execute("""SELECT hash FROM users WHERE email = (%s);""", (email,))
+    user_hash = cursor.fetchall()
+    if user_hash:
+        user_hash = user_hash[0]['hash']
+    else:
+        user_hash = util.hash_password('wrong password')
+
+    return user_hash
+
+
+@connection.connection_handler
+def add_new_user(cursor, user_data):
+    cursor.execute("""INSERT INTO users (email, password, date) VALUES (%s, %s, %s);""", (user_data['email'], user_data['hash'], util.submission_time()))
+    cursor.execute(""" SELECT id FROM users WHERE email=(%s);""", (user_data['email'],))
+    id = cursor.fetchone()
+    return id

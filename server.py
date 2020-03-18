@@ -29,7 +29,7 @@ def question_list(search=None):
 def add_question(question_id=None):
     if request.method == "POST":
         new_question = dict(request.form)
-        if question_id:
+        if question_id and data_manager.get_user_id('question') == data_manager.get_user_id_by_email(session['email']):
             question_id = data_manager.update_question(question_id, new_question)
         else:
             question_id = data_manager.new_question_manager(new_question)
@@ -63,7 +63,7 @@ def show_question(question_id):
 @app.route('/question/<int:question_id>/delete')
 def deleting_question(question_id):
     data_manager.delete_question(question_id)
-    return redirect('/list', logged_in=util.check_if_logged_in())
+    return redirect('/list')
 
 
 @app.route('/answer/<int:answer_id>/update', methods=['GET', 'POST'])
@@ -133,13 +133,18 @@ def contact():
 
 @app.route('/login', methods=["GET", "POST"])
 def log_in():
+    wrong_data = None
     if request.method == "POST":
-        print(request.form)
         session['email'] = request.form['email']
         session['password'] = request.form['password']
-        print(session)
-        return redirect('/')
-    return render_template('login.html', logged_in=util.check_if_logged_in())
+        if util.verify_password(session['password'], data_manager.get_user_password_by_email(session['email'])):
+            return redirect('/')
+        else:
+            session.pop('email', None)
+            session.pop('password', None)
+            wrong_data = 'Invalid user name or password  '
+            return render_template('login.html', logged_in=util.check_if_logged_in(), wrong_data=wrong_data)
+    return render_template('login.html', logged_in=util.check_if_logged_in(), wrong_data=wrong_data)
 
 
 @app.route('/logout')
