@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, request, url_for
 import data_manager
+import util
 
 app = Flask(__name__)
 
@@ -133,9 +134,15 @@ def contact():
     return render_template('contact.html')
 
 
-@app.route('/registration')
+@app.route('/registration', methods=['GET', 'POST'])
 def registration():
+    if request.method == 'POST':
 
+        new_user = dict(request.form)
+
+        data_manager.add_user(new_user)
+
+        return redirect(url_for('main_page'))
 
     return render_template('registration_form.html')
 
