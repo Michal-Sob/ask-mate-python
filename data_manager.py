@@ -113,11 +113,3 @@ def get_user_password_by_email(cursor, email):
         user_hash = util.hash_password('wrong password')
 
     return user_hash
-
-
-@connection.connection_handler
-def add_new_user(cursor, user_data):
-    cursor.execute("""INSERT INTO users (email, password, date) VALUES (%s, %s, %s);""", (user_data['email'], user_data['hash'], util.submission_time()))
-    cursor.execute(""" SELECT id FROM users WHERE email=(%s);""", (user_data['email'],))
-    id = cursor.fetchone()
-    return id
