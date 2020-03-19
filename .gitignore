@@ -102,3 +102,9 @@ ENV/
 
 # pycharm files
 .idea/
+
+#vscode files
+.vscode/
+
+#gitignore
+.gitignore
