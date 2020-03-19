@@ -69,7 +69,7 @@ def deleting_question(question_id):
     if util.is_logged_in() and session['email'] == data_manager.get_user_email(question_id, 'question'):
         data_manager.delete_question(question_id)
     else:
-        return redirect(url_for('log_in'))
+        return redirect(f'/question/{question_id}')
     return redirect('/list')
 
 
@@ -80,6 +80,11 @@ def add_answer(question_id=None, answer_id=None):
     message = None
     if not util.is_logged_in():
         return redirect('/login')
+    if answer_id and session['email'] != data_manager.get_user_email(answer_id, 'answer'):
+        for answer in answers:
+            if answer['id'] == answer_id:
+                question_id = answer['question_id']
+                return redirect(f'/question/{question_id}')
     if request.method == "POST":
         new_answer = dict(request.form)
         if answer_id and session['email'] == data_manager.get_user_email(answer_id, 'answer'):
@@ -106,8 +111,9 @@ def delete_answer(answer_id):
     for answer in answers:
         if answer['id'] == answer_id:
             question_id = answer['question_id']
-    data_manager.delete_answer(answer_id)
-    return redirect(url_for('show_question', question_id=question_id), logged_in=util.is_logged_in())
+    if answer_id and session['email'] == data_manager.get_user_email(answer_id, 'answer'):
+        data_manager.delete_answer(answer_id)
+    return redirect(f'/question/{question_id}')
 
 
 @app.route('/question/<int:question_id>/new-comment', methods=['GET', 'POST'])
