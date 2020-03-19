@@ -124,3 +124,14 @@ def get_user_password_by_email(cursor, email):
 
     return user_hash
 
+
+@connection.connection_handler
+def get_all_users_data(cursor):
+    sql = """SELECT users.id , users.email, users.registration_time, 
+    COUNT(question.user_email) as questions_counter, COUNT(answer.user_email) as answers_counter FROM users 
+    LEFT JOIN question ON users.email = question.user_email LEFT JOIN answer ON users.email = answer.user_email
+    GROUP BY users.id;"""
+    cursor.execute(sql)
+    users = cursor.fetchall()
+    users_data = [dict(user) for user in users]
+    return users_data

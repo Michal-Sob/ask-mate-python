@@ -180,6 +180,14 @@ def registration():
     return render_template('registration_form.html')
 
 
+@app.route('/users')
+def show_all_users():
+    if not util.is_logged_in():
+        return redirect('/login')
+    users_data = data_manager.get_all_users_data()
+    return render_template('users.html', users_data=users_data, logged_in=util.is_logged_in())
+
+
 if __name__ == "__main__":
     app.run(
         debug=True,
