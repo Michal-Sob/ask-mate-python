@@ -25,3 +25,10 @@ def is_logged_in():
     if 'email' in session:
         logged_in = True
     return logged_in
+
+
+def session_email():
+    if 'email' in session:
+        return session['email']
+    else:
+        return None
