@@ -1,0 +1,28 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <h1>USERS LIST</h1><br><br></hr>
+    <table class="users">
+        <thead>
+            <tr class="head">
+                {% for key in users_data[0].keys() %}
+                    <th>{{ key.replace('_', ' ')  }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in users_data[::-1] %}
+                <tr>
+                    {% for key, value in row.items() %}
+                        {% if key == 'email' %}
+                            <td><a href="{{ url_for ('show_question',  question_id=row['id']) }}">{{ value }}</a></td>
+
+                        {% else %}
+                        <td>{{ value }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table><br>
+'
+{% endblock %}
