@@ -129,15 +129,37 @@ def get_user_password_by_email(cursor, email):
 
 @connection.connection_handler
 def get_session_user(cursor, user_email):
-    query = f"""
+    user_query = f"""
     SELECT users.id , users.email, users.registration_time, 
-    COUNT(question.user_email) as questions_counter, COUNT(answer.user_email) as answers_counter FROM users
-    LEFT JOIN question ON users.email = question.user_email LEFT JOIN answer ON users.email = answer.user_email
+            COUNT(question.user_email) as questions_counter,
+            COUNT(answer.user_email) as answers_counter
+     FROM users
+     LEFT JOIN question ON users.email = question.user_email LEFT JOIN answer ON users.email = answer.user_email
     WHERE users.email = '{user_email}'
     GROUP BY users.id ;"""
 
-    cursor.execute(query)
-    users = cursor.fetchall()
-    users_data = [dict(user) for user in users]
+    cursor.execute(user_query)
+    user = cursor.fetchall()
+    user_data = [dict(user) for user in user]
 
-    return users_data
+    questions_query = f"""
+    SELECT *
+      FROM question
+     WHERE user_email = '{user_email}';
+    """
+
+    cursor.execute(questions_query)
+    questions = cursor.fetchall()
+    user_questions = [dict(question) for question in questions]
+
+    answers_query = f"""
+    SELECT *
+      FROM answer
+     WHERE user_email = '{user_email}';
+    """
+
+    cursor.execute(answers_query)
+    answers = cursor.fetchall()
+    user_answers = [dict(answer) for answer in answers]
+
+    return user_data, user_questions, user_answers
