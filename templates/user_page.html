@@ -1,1 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+
 <h1>{{ user_email }}</h1>
+
+<table>
+    <thead>
+        <tr class="head">
+            {% for key in user_data[0].keys() %}
+                <th>{{ key.replace('_', ' ') }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            {% for key, value in user_data[0].items() %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

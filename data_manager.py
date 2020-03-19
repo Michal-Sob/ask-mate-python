@@ -31,7 +31,7 @@ def search_by_title_or_message(cursor, text):
     cursor.execute("""SELECT * FROM question WHERE (message LIKE (%s)) OR (title LIKE (%s))""", (text, text,))
     searched_list = [dict(row) for row in cursor.fetchall()]
     if len(searched_list) == 0:
-        cursor.execute("""SELECT * FROM question """,)
+        cursor.execute("""SELECT * FROM question """, )
         searched_list = [dict(row) for row in cursor.fetchall()]
     return searched_list
 
@@ -47,15 +47,17 @@ def get_comments(cursor, question_id):
 def new_question_manager(cursor, new_question, user_email):
     cursor.execute("""INSERT INTO question (title,submission_time, message, user_email) VALUES (%s,%s,%s,%s);""",
                    (new_question['title'], util.submission_time(), new_question['message'], user_email))
-    cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""", {'title': new_question['title'], 'message': new_question['message']})
+    cursor.execute("""SELECT id FROM question WHERE title= %(title)s;""",
+                   {'title': new_question['title'], 'message': new_question['message']})
     question_id = dict(cursor.fetchone())['id']
     return question_id
 
 
 @connection.connection_handler
 def new_answer_manager(cursor, new_answer):
-    cursor.execute("""INSERT INTO answer (submission_time, question_id, message, user_email)  VALUES ( %s, %s, %s, %s);"""
-                   , (util.submission_time(), new_answer['question_id'], new_answer['message'], new_answer['user_email']))
+    cursor.execute(
+        """INSERT INTO answer (submission_time, question_id, message, user_email)  VALUES ( %s, %s, %s, %s);"""
+        , (util.submission_time(), new_answer['question_id'], new_answer['message'], new_answer['user_email']))
     return new_answer['question_id']
 
 
@@ -69,7 +71,7 @@ def new_comment_manager(cursor, new_comment):
         new_message = 'answer_id'
 
     cursor.execute("""INSERT INTO comment (submission_time, question_id, message)  VALUES ( %s, %s, %s);""",
-                       (util.submission_time(), new_message_value, new_comment['message'],))
+                   (util.submission_time(), new_message_value, new_comment['message'],))
 
 
 @connection.connection_handler
@@ -84,7 +86,8 @@ def delete_answer(cursor, answer_id):
 
 @connection.connection_handler
 def update_question(cursor, question_id, new_question):
-    cursor.execute("""UPDATE question SET message=(%s), title=(%s) WHERE id=(%s);""", (new_question['message'], new_question['title'], question_id,))
+    cursor.execute("""UPDATE question SET message=(%s), title=(%s) WHERE id=(%s);""",
+                   (new_question['message'], new_question['title'], question_id,))
     return question_id
 
 
@@ -98,7 +101,6 @@ def update_answer(cursor, answer_id, new_answer):
 
 @connection.connection_handler
 def add_user(cursor, new_user):
-
     hashed_password = util.hash_password(new_user['password'])
 
     cursor.execute("""INSERT INTO users (email, hash, registration_time) VALUES (%s, %s, %s);""",
@@ -124,3 +126,18 @@ def get_user_password_by_email(cursor, email):
 
     return user_hash
 
+
+@connection.connection_handler
+def get_session_user(cursor, user_email):
+    query = f"""
+    SELECT users.id , users.email, users.registration_time, 
+    COUNT(question.user_email) as questions_counter, COUNT(answer.user_email) as answers_counter FROM users
+    LEFT JOIN question ON users.email = question.user_email LEFT JOIN answer ON users.email = answer.user_email
+    WHERE users.email = '{user_email}'
+    GROUP BY users.id ;"""
+
+    cursor.execute(query)
+    users = cursor.fetchall()
+    users_data = [dict(user) for user in users]
+
+    return users_data
