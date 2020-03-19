@@ -183,9 +183,12 @@ def registration():
 @app.route('/user-<user_email>')
 def user_page(user_email):
     user_email = util.session_email()
-    user_data = data_manager.get_session_user(user_email)
-    print(user_data)
-    return render_template('user_page.html', logged_in=util.is_logged_in(), user_email=util.session_email(), user_data=user_data)
+    elements = [user_data, user_questions, user_answers] = data_manager.get_session_user(user_email)
+
+    return render_template('user_page.html', logged_in=util.is_logged_in(),
+                           user_email=util.session_email(), user_data=user_data,
+                           questions=user_questions, answers=user_answers,
+                           elements=elements)
 
 
 if __name__ == "__main__":
