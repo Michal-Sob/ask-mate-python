@@ -1,0 +1,36 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<h1>{{ user_email }}</h1>
+
+{% for element in elements %}
+    {% if element == questions %}
+        <h2>Questions</h2>
+    {% endif %}
+
+    {% if element == answers %}
+        <h2>Answers</h2>
+    {% endif %}
+
+    <table>
+        <thead>
+            <tr class="head">
+                    {% for key in element[0].keys() %}
+                        <th>{{ key.replace('_', ' ') }}</th>
+                    {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+          {% for piece in element %}
+                <tr>
+                    {% for value in piece.values() %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+          {% endfor %}
+        </tbody>
+    </table>
+
+{% endfor %}
+
+{% endblock %}

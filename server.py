@@ -9,7 +9,7 @@ app.secret_key = b'_5#y2Lk7\n\udp'
 @app.route('/')
 def main_page():
     questions = data_manager.get_questions()
-    return render_template("index.html", questions=questions, logged_in=util.is_logged_in())
+    return render_template("index.html", questions=questions, logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/list/<search>', methods=['GET'])
@@ -21,7 +21,7 @@ def question_list(search=None):
         questions = data_manager.search_by_title_or_message(text)
     else:
         questions = data_manager.get_questions()
-    return render_template('question_list.html', questions=questions, text=text, logged_in=util.is_logged_in())
+    return render_template('question_list.html', questions=questions, text=text, logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/question/<int:question_id>/update', methods=['GET', 'POST'])
@@ -44,7 +44,7 @@ def add_question(question_id=None):
         selected_question = data_manager.get_questions(question_id=question_id)[0]
 
     return render_template('add_question.html', selected_question=selected_question, question_id=question_id,
-                           logged_in=util.is_logged_in())
+                           logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/question/<int:question_id>')
@@ -61,7 +61,7 @@ def show_question(question_id):
     comments = data_manager.get_comments(question_id=question_id)
     # answers_comments = None
     return render_template('show_question.html', question_id=question_id, selected_question=selected_question, answers=answers,
-                           answer_id=answer_id, comments=comments, logged_in=util.is_logged_in())
+                           answer_id=answer_id, comments=comments, logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/question/<int:question_id>/delete')
@@ -101,7 +101,7 @@ def add_answer(question_id=None, answer_id=None):
                 message = answer['message']
 
     return render_template('add_answer.html', question_id=question_id, answer_id=answer_id, message=message,
-                           logged_in=util.is_logged_in())
+                           logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/answer/<int:answer_id>/delete')
@@ -125,7 +125,7 @@ def add_question_comment(question_id):
 
         return redirect(f'/question/{question_id}')
 
-    return render_template('add_comment.html', question_id=question_id, logged_in=util.is_logged_in())
+    return render_template('add_comment.html', question_id=question_id, logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 # Work in progress
@@ -138,13 +138,13 @@ def add_answer_comment(answer_id):
 
         return redirect(f'/question/{question_id}')
 
-    return render_template('add_comment.html', answer_id=answer_id, logged_in=util.is_logged_in())
+    return render_template('add_comment.html', answer_id=answer_id, logged_in=util.is_logged_in(), user_email=util.session_email())
 # Work in progress
 
 
 @app.route('/contact')
 def contact():
-    return render_template('contact.html', logged_in=util.is_logged_in())
+    return render_template('contact.html', logged_in=util.is_logged_in(), user_email=util.session_email())
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -186,6 +186,17 @@ def show_all_users():
         return redirect('/login')
     users_data = data_manager.get_all_users_data()
     return render_template('users.html', users_data=users_data, logged_in=util.is_logged_in())
+
+
+@app.route('/user-<user_email>')
+def user_page(user_email):
+    user_email = util.session_email()
+    elements = [user_data, user_questions, user_answers] = data_manager.get_session_user(user_email)
+
+    return render_template('user_page.html', logged_in=util.is_logged_in(),
+                           user_email=util.session_email(), user_data=user_data,
+                           questions=user_questions, answers=user_answers,
+                           elements=elements)
 
 
 if __name__ == "__main__":
